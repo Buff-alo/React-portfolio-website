@@ -18,7 +18,7 @@ build:
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
   script:
     - echo "Building Docker image..."
-    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker build -f docker/Dockerfile -t $IMAGE_NAME:$IMAGE_TAG .
     - echo "Pushing Docker image to registry..."
     - docker push $IMAGE_NAME:$IMAGE_TAG
 
