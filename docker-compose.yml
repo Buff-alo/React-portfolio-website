@@ -4,7 +4,7 @@ services:
     container_name: portfolio-web
     restart: unless-stopped
     env_file:
-      - ../.env
+      - .env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.movie.rule=Host(`web.kwadwolabs.cloud`)"
