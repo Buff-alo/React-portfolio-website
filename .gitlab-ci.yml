@@ -1,0 +1,64 @@
+variables:
+  IMAGE_NAME: buffalo147/dev-apps
+  IMAGE_TAG: portfolio-web
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - echo "Logging in to Docker registry..."
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+  script:
+    - echo "Building Docker image..."
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - echo "Pushing Docker image to registry..."
+    - docker push $IMAGE_NAME:$IMAGE_TAG
+
+# debug_ssh:
+#   stage: deploy
+#   image: alpine:latest
+#   before_script:
+#     - apk add --no-cache openssh-client  # Keep only necessary package
+#     - mkdir -p ~/.ssh
+#     - cp "$SSH_KEY" ~/.ssh/id_rsa
+#     - chmod 400 ~/.ssh/id_rsa
+#   script:
+#     # Replace 'file' command with safer alternatives:
+#     - echo "Verifying SSH key:"
+#     - head -n 1 ~/.ssh/id_rsa | grep -q "BEGIN" && echo "Valid key header found" || echo "Invalid key format"
+#     - head -n 5 ~/.ssh/id_rsa  # Original verification command
+
+deploy:
+  stage: deploy
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client
+    - mkdir -p ~/.ssh
+    - cp "$SSH_KEY" ~/.ssh/id_rsa
+    - chmod 400 ~/.ssh/id_rsa
+  script:
+    - echo "Copying docker-compose.yml and .env to server..."
+    - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa docker-compose.yml root@$LINODE_SERVER:/root/dev-portfolio/
+    - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa .env root@$LINODE_SERVER:/root/dev-portfolio/
+    - echo "Deploying containerized app..."
+    - |
+      ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@$LINODE_SERVER "\
+        export IMAGE_NAME='$IMAGE_NAME'; \
+        export IMAGE_TAG='$IMAGE_TAG'; \
+        export REGISTRY_USER='$REGISTRY_USER'; \
+        export REGISTRY_PASS='$REGISTRY_PASS'; \
+        \
+        cd /root/dev-portfolio && \
+        docker login -u \"\$REGISTRY_USER\" -p \"\$REGISTRY_PASS\" && \
+        docker pull \"\$IMAGE_NAME:\$IMAGE_TAG\" && \
+        docker compose down -v || true && \
+        docker compose up -d
+      "
