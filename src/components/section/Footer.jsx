@@ -166,7 +166,7 @@ const Footer = () => {
                     isDarkMode
                       ? "bg-gray-800/50 hover:bg-gray-700/50"
                       : "bg-gray-100/50 hover:bg-gray-200/50"
-                  }${social.color} backdrop-blur-sm`}
+                  } ${social.color} backdrop-blur-sm`}
                   whileHover={{
                     scale: 1.1,
                     y: -2,
