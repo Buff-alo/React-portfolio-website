@@ -20,145 +20,151 @@ import {
 
 import { FiGithub, FiLinkedin, FiMail, FiTwitter } from "react-icons/fi";
 
-import PROJECT_IMG_1 from "../assets/images/project1.jpg";
+import PROJECT_IMG_1 from "../assets/images/project1.png";
+
+export const HERO_TAGS = [
+  "Docker",
+  "Terraform",
+  "Ansible",
+  "Django",
+];
 
 export const SKILLS_CAT = [
   {
-    title: "Frontend",
-    icon: Code2,
-    description: "Building responsive and interactive user interfaces.",
-    skills: [{ name: "React", level: 95, color: "bg-green-500" }],
+    title: "DevOps",
+    icon: Cloud,
+    description: "Implementing scalable and secure infrastructure solutions.",
+    skills: [
+      { name: "Docker", level: 90, color: "bg-blue-500" },
+      { name: "Terraform", level: 85, color: "bg-green-500" },
+      { name: "Ansible", level: 80, color: "bg-red-500" },
+      { name: "Traefik", level: 75, color: "bg-gray-500" },
+      { name: "Nomad", level: 70, color: "bg-orange-500" },
+      { name: "Consul", level: 70, color: "bg-yellow-500" },
+    ],
   },
   {
     title: "Backend",
     icon: Server,
-    description: "Developing server-side applications and APIs.",
+    description: "Developing APIs and server-side logic for web applications.",
     skills: [
-      { name: "Node.js", level: 90, color: "bg-blue-500" },
-      { name: "Express", level: 85, color: "bg-blue-400" },
+      { name: "Django", level: 60, color: "bg-blue-500" },
+      { name: "Laravel", level: 20, color: "bg-green-400" },
     ],
   },
   {
     title: "Database",
     icon: Database,
-    description: "Managing and querying databases.",
+    description: "Designing and managing reliable data storage systems.",
     skills: [
-      { name: "MongoDB", level: 90, color: "bg-green-500" },
-      { name: "PostgreSQL", level: 80, color: "bg-blue-500" },
+      { name: "MySql", level: 70, color: "bg-blue-500" },
+      // { name: "MongoDB", level: 75, color: "bg-green-500" },
     ],
   },
   {
-    title: "DevOps",
-    icon: Cloud,
-    description: "Implementing and managing cloud infrastructure.",
-    skills: [
-      { name: "Docker", level: 85, color: "bg-blue-500" },
-      { name: "Kubernetes", level: 75, color: "bg-blue-400" },
-    ],
+    title: "Frontend",
+    icon: Code2,
+    description: "Building basic and functional user interfaces.",
+    skills: [{ name: "React", level: 60, color: "bg-purple-400" }],
   },
 ];
 
+
 export const TECH_STACK = [
-  { name: "JavaScript", icon: "logos:javascript" },
-  { name: "TypeScript", icon: "logos:typescript" },
-  { name: "React", icon: "logos:react" },
-  { name: "Node.js", icon: "logos:nodejs" },
-  { name: "MongoDB", icon: "logos:mongodb" },
-  { name: "PostgreSQL", icon: "logos:postgresql" },
-  { name: "Docker", icon: "logos:docker" },
+  { name: "Linux", icon: "logos:linux-tux" },
+  { name: "Git", icon: "logos:git-icon" },
+  { name: "GitLab CI", icon: "logos:gitlab" },
+  { name: "Nginx", icon: "logos:nginx" },
+  { name: "Systemd", icon: "material-icon-theme:systemd-light" },
+  { name: "Bash", icon: "simple-icons:gnubash" },
+  { name: "Visual Studio Code", icon: "logos:visual-studio-code" },
 ];
 
+
 export const STATS = [
-  { title: "Projects Completed", value: 50, icon: Rocket },
-  { title: "Years of Experience", value: "5+", icon: Briefcase },
-  { title: "Happy Clients", value: 100, icon: Heart },
-  { title: "Coffee Cups", value: 500, icon: Coffee },
+  { title: "Projects Completed", value: 25, icon: Rocket },
+  { title: "Years of Experience", value: "3+", icon: Briefcase },
+  { title: "Happy Clients", value: 10, icon: Heart },
+  { title: "Coffee Cups", value: 300, icon: Coffee },
 ];
 
 export const PROJECTS = [
   {
     id: 1,
-    title: "Project One",
-    description: "A brief description of Project One.",
+    title: "DevOps Pipeline & Infrastructure Setup",
+    description:
+      "A full CI/CD pipeline using GitLab CI, Docker, Terraform, and Ansible to deploy a Django web app.",
     image: PROJECT_IMG_1,
-    tags: ["React", "Node.js", "MongoDB"],
+    tags: ["Terraform", "Ansible", "Docker", "GitLab CI", "Traefik"],
     liveUrl: "#",
     repoUrl: "#",
-    featured: false,
-    category: "Full Stack",
+    featured: true,
+    category: "DevOps",
   },
 ];
 
 export const JOURNEY_STEPS = [
   {
-    year: "2018",
-    title: "Graduated with a Computer Science Degree",
-    company: "XYZ Corp.",
+    year: "2022",
+    title: "Started Computer Science Degree",
+    company: "Takoradi Technical University",
     description:
-      "Completed my Bachelor's degree in Computer Science, laying the foundation for my career in software development.",
+      "Enrolled as a Computer Science student specializing in Networking, DevOps, and Backend Development.",
     icon: GraduationCap,
     color: "bg-green-500",
   },
   {
-    year: "2019",
-    title: "Started First Job as a Software Engineer",
+    year: "2022",
+    title: "Built First Full Stack Project",
     description:
-      "Joined a tech company as a junior software engineer, working on web applications and gaining practical experience.",
-    icon: Briefcase,
-    color: "bg-blue-500",
-  },
-  {
-    year: "2020",
-    title: "Became a Full Stack Developer",
-    description:
-      "Transitioned to a full stack developer role, working on both frontend and backend technologies.",
+      "Created a full stack app with Django and React. Started diving into API development and deployment.",
     icon: Code2,
     color: "bg-blue-400",
   },
   {
-    year: "2021",
-    title: "Contributed to Open Source Projects",
+    year: "2023",
+    title: "Shifted to DevOps Focus",
     description:
-      "Started contributing to open source projects, enhancing my skills and collaborating with the developer community.",
-    icon: Award,
-    color: "bg-yellow-500",
+      "Started building infrastructure as code using Terraform, Docker, and Ansible. Explored reverse proxies like Traefik.",
+    icon: Cloud,
+    color: "bg-gray-500",
   },
   {
-    year: "2022",
-    title: "Launched Personal Projects",
+    year: "2025",
+    title: "Launched Cloud Portfolio Site",
     description:
-      "Developed and launched several personal projects, showcasing my skills and creativity.",
+      "Deployed a portfolio app to the cloud using Docker Compose, GitLab CI, and Traefik with dynamic subdomains.",
     icon: Rocket,
     color: "bg-red-500",
   },
   {
-    year: "2023",
-    title: "Focused on Cloud Technologies",
+    year: "2025",
+    title: "Automated Trading Bot (Ongoing)",
     description:
-      "Shifted focus towards cloud technologies and DevOps practices, enhancing my skill set for modern software development.",
-    icon: Cloud,
-    color: "bg-gray-500",
+      "Working on a trade bot using Telethon, Selenium, and multi-threading, combining Python, bots, and automation.",
+    icon: Zap,
+    color: "bg-yellow-500",
   },
 ];
 
 export const PASSIONS = [
   {
+    title: "Infrastructure Automation",
+    description:
+      "Love automating deployments and environments using modern DevOps tools.",
+    icon: Cloud,
+  },
+  {
+    title: "System Design & Architecture",
+    description:
+      "Interested in how scalable systems are planned and implemented.",
+    icon: Server,
+  },
+  {
     title: "Problem Solving",
     description:
-      "Enjoy tackling complex challenges and finding efficient solutions.",
+      "Enjoy breaking down complex infrastructure or backend issues.",
     icon: Coffee,
-  },
-  {
-    title: "Learning New Technologies",
-    description:
-      "Passionate about staying updated with the latest trends and technologies in software development.",
-    icon: BookOpen,
-  },
-  {
-    title: "Building Scalable Applications",
-    description:
-      "Love creating applications that can handle growth and scale effectively.",
-    icon: Zap,
   },
 ];
 
@@ -166,47 +172,47 @@ export const SOCIAL_LINKS = [
   {
     name: "GitHub",
     icon: FiGithub,
-    url: "#",
+    url: "https://github.com/Buff-alo",
     color: "hover:text-gray-400",
     bgColor: "hover:bg-gray-800",
   },
   {
     name: "LinkedIn",
     icon: FiLinkedin,
-    url: "#",
+    url: "https://www.linkedin.com/in/kwadwo-boakye-69196b324/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BSl4kyZI3SM%2B93DkCkY8lhQ%3D%3D",
     color: "hover:text-gray-400",
     bgColor: "hover:bg-gray-800",
   },
   {
     name: "Twitter",
     icon: FiTwitter,
-    url: "#",
+    url: "https://x.com/boakkwadwo",
     color: "hover:text-gray-400",
     bgColor: "hover:bg-gray-800",
   },
   {
     name: "Email",
     icon: FiMail,
-    url: "#",
+    url: "mailto:contact@kwadwolabs.cloud",
     color: "hover:text-gray-400",
     bgColor: "hover:bg-gray-800",
-  }
+  },
 ];
 
 export const CONTACT_INFO = [
-    {
-        icon: MapPin,
-        label: "Location",
-        value: "<your-location>",
-    },
-    {
-        icon: Phone,
-        label: "Phone",
-        value: "<your-phone>",
-    },
-    {
-        icon: Mail,
-        label: "Email",
-        value: "<your-email>",
-    },
-]
+  {
+    icon: MapPin,
+    label: "Location",
+    value: "Accra, Ghana",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+233 20 116 2943",
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: "contact@kwadwolabs.cloud",
+  },
+];

@@ -1,5 +1,6 @@
 
 import { easeOut } from "framer-motion";
+
 export const containerVariants = {
     hidden: { opacity: 0, y: 50 },
     visible: {

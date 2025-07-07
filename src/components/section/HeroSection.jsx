@@ -3,8 +3,10 @@ import { easeOut, motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Mail } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
+import React from "react";
 
 import { containerVariants, itemVariants } from "../../utils/helper";
+import { HERO_TAGS } from "../../utils/data";
 
 import PROFILE_PIC from "../../assets/images/profile1.jpg";
 const HeroSection = () => {
@@ -19,7 +21,6 @@ const HeroSection = () => {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-
 
   const textVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -133,7 +134,7 @@ const HeroSection = () => {
                   isDarkMode ? "text-gray-500" : "text-gray-600"
                 } mb-4`}
               >
-                Full Stack Developer
+                DevOps & Backend Engineer
               </motion.div>
 
               <motion.h1
@@ -143,14 +144,12 @@ const HeroSection = () => {
                 <span
                   className={`${isDarkMode ? "text-white" : "text-gray-900"}`}
                 >
-                  Building digital
+                  Orchestrating scalable and
                 </span>
-                <span className="text-blue-500 font-light ml-2">
-                  experiences
-                </span>
+                <span className="text-blue-500 font-light ml-2">secure</span>
                 <br />
                 <span className={isDarkMode ? "text-white" : "text-gray-900"}>
-                  that matter
+                  infrastructure
                 </span>
               </motion.h1>
 
@@ -160,8 +159,9 @@ const HeroSection = () => {
                   isDarkMode ? "text-gray-400" : "text-gray-600"
                 } mb-8 max-w-xl mx-auto font-light leading-relaxed`}
               >
-                I craft beautiful, functional web applications with modern
-                technologies and thoughtful user experiences.
+                I build and automate secure cloud infrastructure, scalable
+                backends, and efficient developer pipelines using modern DevOps
+                tools like Docker, Terraform, and Nomad.
               </motion.p>
 
               {/* CTA Buttons - Mobile */}
@@ -219,41 +219,24 @@ const HeroSection = () => {
                 variants={itemVariants}
                 className="flex justify-center items-center space-x-6 text-xs uppercase tracking-widest flex-wrap"
               >
-                <span
-                  className={isDarkMode ? "text-gray-600" : "text-gray-500"}
-                >
-                  React
-                </span>
-                <span
-                  className={isDarkMode ? "text-gray-700" : "text-gray-400"}
-                >
-                  .
-                </span>
-                <span
-                  className={isDarkMode ? "text-gray-600" : "text-gray-500"}
-                >
-                  Django
-                </span>
-                <span
-                  className={isDarkMode ? "text-gray-700" : "text-gray-400"}
-                >
-                  .
-                </span>
-                <span
-                  className={isDarkMode ? "text-gray-600" : "text-gray-500"}
-                >
-                  Node.js
-                </span>
-                <span
-                  className={isDarkMode ? "text-gray-700" : "text-gray-400"}
-                >
-                  .
-                </span>
-                <span
-                  className={isDarkMode ? "text-gray-600" : "text-gray-500"}
-                >
-                  TypeScript
-                </span>
+                {HERO_TAGS.map((tech, idx) => (
+                  <React.Fragment key={tech}>
+                    <span
+                      className={isDarkMode ? "text-gray-600" : "text-gray-500"}
+                    >
+                      {tech}
+                    </span>
+                    {idx < HERO_TAGS.length - 1 && (
+                      <span
+                        className={
+                          isDarkMode ? "text-gray-700" : "text-gray-400"
+                        }
+                      >
+                        •
+                      </span>
+                    )}
+                  </React.Fragment>
+                ))}
               </motion.div>
             </motion.div>
           </div>
@@ -273,7 +256,7 @@ const HeroSection = () => {
                   isDarkMode ? "text-gray-500" : "text-gray-600"
                 } mb-6`}
               >
-                Full Stack Developer
+                DevOps & Backend Engineer
               </motion.div>
               <motion.h1
                 variants={itemVariants}
@@ -282,15 +265,15 @@ const HeroSection = () => {
                 <span
                   className={`${isDarkMode ? "text-white" : "text-gray-900"}`}
                 >
-                  Building digital
+                  Orchestrating scalable and
                 </span>
                 <br />
-                <span className="text-blue-500 font-medium">experiences</span>
+                <span className="text-blue-500 font-medium">secure</span>
                 <br />
                 <span
                   className={`${isDarkMode ? "text-white" : "text-gray-900"}`}
                 >
-                  that matter
+                  infrastructure
                 </span>
               </motion.h1>
 
@@ -300,9 +283,9 @@ const HeroSection = () => {
                   isDarkMode ? "text-gray-400" : "text-gray-600"
                 } mb-12 font-light leading-relaxed max-w-lg`}
               >
-                I craft beautiful, functional web applications with modern with
-                modern technologies and thoughtful user experiences and
-                thougthful user experiences
+                I build and automate secure cloud infrastructure, scalable
+                backends, and efficient developer pipelines using modern DevOps
+                tools like Docker, Terraform, and Nomad.
               </motion.p>
 
               {/* CTA Buttons - Desktop */}
@@ -323,7 +306,7 @@ const HeroSection = () => {
                     isDarkMode
                       ? "border-gray-700 hover:border-gray-600 text-gray-300"
                       : "border-gray-300 hover:border-gray-400 text-gray-700"
-                  }px-8 py-4 rounded-full text-sm uppercase tracking-wider font-medium transition-all duration-300 flex items-center gap-2`}
+                  } px-8 py-4 rounded-full text-sm uppercase tracking-wider font-medium transition-all duration-300 flex items-center gap-2`}
                 >
                   Get In Touch
                 </motion.button>
@@ -335,9 +318,9 @@ const HeroSection = () => {
                 className="flex space-x-6 mb-12"
               >
                 {[
-                  { icon: FiGithub, href: "#" },
-                  { icon: FiLinkedin, href: "#" },
-                  { icon: Mail, href: "mailto:#" },
+                  { icon: FiGithub, href: "https://github.com/Buff-alo" },
+                  { icon: FiLinkedin, href: "https://www.linkedin.com/in/kwadwo-boakye-69196b324/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BSl4kyZI3SM%2B93DkCkY8lhQ%3D%3D" },
+                  { icon: Mail, href: "mailto:contact@kwadwolabs.cloud" },
                 ].map((social, index) => (
                   <motion.a
                     key={index}
@@ -368,41 +351,26 @@ const HeroSection = () => {
                   variants={itemVariants}
                   className="flex items-center space-x-8 text-xs uppercase tracking-widest absolute -top-16 -left-20"
                 >
-                  <span
-                    className={isDarkMode ? "text-gray-600" : "text-gray-500"}
-                  >
-                    React
-                  </span>
-                  <span
-                    className={isDarkMode ? "text-gray-700" : "text-gray-400"}
-                  >
-                    .
-                  </span>
-                  <span
-                    className={isDarkMode ? "text-gray-600" : "text-gray-500"}
-                  >
-                    Django
-                  </span>
-                  <span
-                    className={isDarkMode ? "text-gray-700" : "text-gray-400"}
-                  >
-                    .
-                  </span>
-                  <span
-                    className={isDarkMode ? "text-gray-600" : "text-gray-500"}
-                  >
-                    Node.js
-                  </span>
-                  <span
-                    className={isDarkMode ? "text-gray-700" : "text-gray-400"}
-                  >
-                    .
-                  </span>
-                  <span
-                    className={isDarkMode ? "text-gray-600" : "text-gray-500"}
-                  >
-                    TypeScript
-                  </span>
+                  {HERO_TAGS.map((tech, idx) => (
+                    <React.Fragment key={tech}>
+                      <span
+                        className={
+                          isDarkMode ? "text-gray-600" : "text-gray-500"
+                        }
+                      >
+                        {tech}
+                      </span>
+                      {idx < HERO_TAGS.length - 1 && (
+                        <span
+                          className={
+                            isDarkMode ? "text-gray-700" : "text-gray-400"
+                          }
+                        >
+                          •
+                        </span>
+                      )}
+                    </React.Fragment>
+                  ))}
                 </motion.div>
 
                 <motion.div
