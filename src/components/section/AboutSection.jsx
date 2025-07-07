@@ -117,8 +117,9 @@ const AboutSection = () => {
               >
                 I believe technology should be a bridge that connects people and
                 solves real-world problems. As a DevOps engineer, I strive to
-                create applications that are scalable, reliable, and easy to
-                maintain.
+                architect infrastructure and workflows that are scalable,
+                secure, and developer-friendly — using modern DevOps and
+                cloud-native tools. .
               </p>
               <p
                 className={`text-base leading-relaxed ${
@@ -131,9 +132,45 @@ const AboutSection = () => {
               </p>
             </motion.div>
 
+            {/* What I specialize in */}
+            <motion.div
+              variants={itemVariants}
+              className={`p-8 rounded-2xl border ${
+                isDarkMode
+                  ? "bg-gray-800/50 border-gray-700 backdrop-blur-sm"
+                  : "bg-gray-50/80 border-gray-200 backdrop-blur-sm"
+              }`}
+            >
+              <h3 className="text-2xl font-medium mb-4">
+                What I Specialize In
+              </h3>
+              <ul
+                className={`list-disc pl-6 space-y-2 text-base leading-relaxed ${
+                  isDarkMode ? "text-gray-400" : "text-gray-600"
+                }`}
+              >
+                <li>
+                  🔧 <strong>DevOps & Infrastructure</strong>: I design scalable
+                  systems using tools like <strong>Docker</strong>,{" "}
+                  <strong>Terraform</strong>, <strong>Nomad</strong>,{" "}
+                  <strong>Consul</strong>, and <strong>Ansible</strong>.
+                </li>
+                <li>
+                  🧠 <strong>Backend Engineering</strong>: I build robust APIs
+                  and automation services using <strong>Django</strong> and{" "}
+                  <strong>Node.js</strong>.
+                </li>
+                <li>
+                  🎨 <strong>Frontend (when needed)</strong>: I deliver simple
+                  yet effective UIs using <strong>React</strong> and{" "}
+                  <strong>TypeScript</strong>.
+                </li>
+              </ul>
+            </motion.div>
+
             {/* What I love Building */}
             <motion.div variants={itemVariants} className="space-y-4">
-              <h3 className="text-xl font-medium mb-6">What I love building</h3>
+              <h3 className="text-xl font-medium mb-6">What Drives Me</h3>
               <div className="grid gap-4">
                 {PASSIONS.map((passion, index) => (
                   <motion.div

@@ -97,7 +97,7 @@ export const PROJECTS = [
     image: PROJECT_IMG_1,
     tags: ["Terraform", "Ansible", "Docker", "GitLab CI", "Traefik"],
     liveUrl: "#",
-    repoUrl: "#",
+    repoUrl: "https://github.com/Buff-alo/Infrastructure",
     featured: true,
     category: "DevOps",
   },
