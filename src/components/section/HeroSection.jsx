@@ -319,7 +319,7 @@ const HeroSection = () => {
               >
                 {[
                   { icon: FiGithub, href: "https://github.com/Buff-alo" },
-                  { icon: FiLinkedin, href: "https://www.linkedin.com/in/kwadwo-boakye-69196b324/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BSl4kyZI3SM%2B93DkCkY8lhQ%3D%3D" },
+                  { icon: FiLinkedin, href: "https://www.linkedin.com/in/kwadwo-boakye" },
                   { icon: Mail, href: "mailto:contact@kwadwolabs.cloud" },
                 ].map((social, index) => (
                   <motion.a

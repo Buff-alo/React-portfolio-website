@@ -171,7 +171,7 @@ const SkillSection = () => {
           className="mt-16"
         >
           <motion.div variants={itemVariants} className="text-center mb-8">
-            <h3 className="text-xl font-medium mb-4">Also Working With</h3>
+            <h3 className="text-xl font-medium mb-4">Other Tools & Platforms</h3>
           </motion.div>
 
           <motion.div

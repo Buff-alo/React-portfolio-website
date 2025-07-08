@@ -1,4 +1,4 @@
-import { Frown } from "lucide-react";
+import { Code, Frown } from "lucide-react";
 import {
   Code2,
   GraduationCap,
@@ -18,29 +18,26 @@ import {
   Phone,
 } from "lucide-react";
 
+
+
 import { FiGithub, FiLinkedin, FiMail, FiTwitter } from "react-icons/fi";
 
 import PROJECT_IMG_1 from "../assets/images/project1.png";
 
-export const HERO_TAGS = [
-  "Docker",
-  "Terraform",
-  "Ansible",
-  "Django",
-];
+export const HERO_TAGS = ["Docker", "Terraform", "Ansible", "Django"];
 
 export const SKILLS_CAT = [
   {
-    title: "DevOps",
+    title: "DevOps & Infrastructure",
     icon: Cloud,
     description: "Implementing scalable and secure infrastructure solutions.",
     skills: [
+      { name: "Terraform", level: 90, color: "bg-purple-500" },
+      { name: "Ansible", level: 85, color: "bg-gray-500" },
+      { name: "Nomad", level: 80, color: "bg-green-500" },
+      { name: "Consul", level: 80, color: "bg-pink-500" },
       { name: "Docker", level: 90, color: "bg-blue-500" },
-      { name: "Terraform", level: 85, color: "bg-green-500" },
-      { name: "Ansible", level: 80, color: "bg-red-500" },
-      { name: "Traefik", level: 75, color: "bg-gray-500" },
-      { name: "Nomad", level: 70, color: "bg-orange-500" },
-      { name: "Consul", level: 70, color: "bg-yellow-500" },
+      { name: "GitLab CI/CD", level: 85, color: "bg-orange-500" },
     ],
   },
   {
@@ -48,8 +45,19 @@ export const SKILLS_CAT = [
     icon: Server,
     description: "Developing APIs and server-side logic for web applications.",
     skills: [
-      { name: "Django", level: 60, color: "bg-blue-500" },
-      { name: "Laravel", level: 20, color: "bg-green-400" },
+      { name: "Django", level: 60, color: "bg-green-500" },
+      { name: "Laravel", level: 20, color: "bg-red-400" },
+    ],
+  },
+  {
+    title: "Programming Languages",
+    description: "Languages I use to build, automate, and scale systems.",
+    icon: Code,
+    skills: [
+      { name: "Python", level: 90, color: "bg-blue-500" },
+      { name: "JavaScript", level: 80, color: "bg-yellow-400" },
+      { name: "TypeScript", level: 70, color: "bg-indigo-600" },
+      { name: "Bash", level: 75, color: "bg-gray-600" },
     ],
   },
   {
@@ -65,10 +73,12 @@ export const SKILLS_CAT = [
     title: "Frontend",
     icon: Code2,
     description: "Building basic and functional user interfaces.",
-    skills: [{ name: "React", level: 60, color: "bg-purple-400" }],
+    skills: [
+      { name: "React", level: 70, color: "bg-sky-500" },
+      { name: "TailwindCSS", level: 75, color: "bg-teal-500" },
+    ],
   },
 ];
-
 
 export const TECH_STACK = [
   { name: "Linux", icon: "logos:linux-tux" },
@@ -78,14 +88,16 @@ export const TECH_STACK = [
   { name: "Systemd", icon: "material-icon-theme:systemd-light" },
   { name: "Bash", icon: "simple-icons:gnubash" },
   { name: "Visual Studio Code", icon: "logos:visual-studio-code" },
+  { name: "Traefik", icon: "simple-icons:traefikmesh" },
+  { name: "Cloudflare", icon: "logos:cloudflare-icon" },
+  { name: "AWS EC2", icon: "logos:aws" },
 ];
 
-
 export const STATS = [
-  { title: "Projects Completed", value: 25, icon: Rocket },
-  { title: "Years of Experience", value: "3+", icon: Briefcase },
-  { title: "Happy Clients", value: 10, icon: Heart },
-  { title: "Coffee Cups", value: 300, icon: Coffee },
+  { title: "VMs Automated", value: "20+" },
+  { title: "Deployments", value: "30+" },
+  { title: "CI/CD Pipelines", value: "10+" },
+  { title: "Projects Delivered", value: "15+" },
 ];
 
 export const PROJECTS = [
@@ -179,7 +191,7 @@ export const SOCIAL_LINKS = [
   {
     name: "LinkedIn",
     icon: FiLinkedin,
-    url: "https://www.linkedin.com/in/kwadwo-boakye-69196b324/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3BSl4kyZI3SM%2B93DkCkY8lhQ%3D%3D",
+    url: "https://www.linkedin.com/in/kwadwo-boakye",
     color: "hover:text-gray-400",
     bgColor: "hover:bg-gray-800",
   },
