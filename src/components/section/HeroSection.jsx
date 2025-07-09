@@ -196,9 +196,9 @@ const HeroSection = () => {
                 className="flex justify-center space-x-6 mb-8"
               >
                 {[
-                  { icon: FiGithub, href: "#" },
-                  { icon: FiLinkedin, href: "#" },
-                  { icon: Mail, href: "mailto:#" },
+                  { icon: FiGithub, href: "https://github.com/Buff-alo" },
+                  { icon: FiLinkedin, href: "https://www.linkedin.com/in/kwadwo-boakye" },
+                  { icon: Mail, href: "mailto:contact@kwadwolabs.cloud" },
                 ].map((social, index) => (
                   <motion.a
                     key={index}
