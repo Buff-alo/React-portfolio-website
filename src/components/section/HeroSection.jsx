@@ -320,7 +320,7 @@ const HeroSection = () => {
                 {[
                   { icon: FiGithub, href: "https://github.com/Buff-alo" },
                   { icon: FiLinkedin, href: "https://www.linkedin.com/in/kwadwo-boakye" },
-                  { icon: Mail, href: "mailto:contact@kwadwolabs.cloud" },
+                  { icon: Mail, href: "mailto:contact@kwadwolabs.cloud?subject=Let's%20Talk&body=Hi%20Kwadwo,%20I%20checked%20your%20portfolio..." }
                 ].map((social, index) => (
                   <motion.a
                     key={index}
