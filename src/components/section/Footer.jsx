@@ -20,26 +20,26 @@ const Footer = () => {
     {
       name: "Github",
       icon: FiGithub,
-      href: "#",
+      href: "https://github.com/Buff-alo",
       color: "hover:text-gray-400",
     },
     {
       name: "LinkedIn",
       icon: FiLinkedin,
-      href: "#",
+      href: "https://www.linkedin.com/in/kwadwo-boakye",
       color: "hover:text-blue-400",
     },
     {
       name: "Twitter",
       icon: FiTwitter,
-      href: "#",
+      href: "https://x.com/boakkwadwo",
       color: "hover:text-sky-400",
     },
     {
       name: "Email",
       icon: Mail,
-      href: "mailto:#",
-      color: "hover:text-green-400",
+      href: "mailto:contact@kwadwolabs.cloud",
+      color: "hover:text-red-400",
     },
   ];
 

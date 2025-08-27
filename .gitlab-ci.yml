@@ -46,11 +46,11 @@ deploy:
     - chmod 400 ~/.ssh/id_rsa
   script:
     - echo "Copying docker-compose.yml and .env to server..."
-    - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa docker-compose.yml root@$LINODE_SERVER:/root/dev-portfolio/
-    - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa .env root@$LINODE_SERVER:/root/dev-portfolio/
+    - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa docker-compose.yml root@$KLS_SERVER:/root/dev-portfolio/
+    - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa .env root@$KLS_SERVER:/root/dev-portfolio/
     - echo "Deploying containerized app..."
     - |
-      ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@$LINODE_SERVER "\
+      ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@$KLS_SERVER "\
         export IMAGE_NAME='$IMAGE_NAME'; \
         export IMAGE_TAG='$IMAGE_TAG'; \
         export REGISTRY_USER='$REGISTRY_USER'; \
