@@ -36,29 +36,53 @@ build:
 #     - head -n 1 ~/.ssh/id_rsa | grep -q "BEGIN" && echo "Valid key header found" || echo "Invalid key format"
 #     - head -n 5 ~/.ssh/id_rsa  # Original verification command
 
+# deploy:
+#   stage: deploy
+#   image: alpine:latest
+#   before_script:
+#     - apk add --no-cache openssh-client
+#     - mkdir -p ~/.ssh
+#     - cp "$SSH_KEY" ~/.ssh/id_rsa
+#     - chmod 400 ~/.ssh/id_rsa
+#   script:
+#     - echo "Copying docker-compose.yml and .env to server..."
+#     - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa docker-compose.yml root@$KLS_SERVER:/root/dev-portfolio/
+#     - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa .env root@$KLS_SERVER:/root/dev-portfolio/
+#     - echo "Deploying containerized app..."
+#     - |
+#       ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@$KLS_SERVER "\
+#         export IMAGE_NAME='$IMAGE_NAME'; \
+#         export IMAGE_TAG='$IMAGE_TAG'; \
+#         export REGISTRY_USER='$REGISTRY_USER'; \
+#         export REGISTRY_PASS='$REGISTRY_PASS'; \
+#         \
+#         cd /root/dev-portfolio && \
+#         docker login -u \"\$REGISTRY_USER\" -p \"\$REGISTRY_PASS\" && \
+#         docker pull \"\$IMAGE_NAME:\$IMAGE_TAG\" && \
+#         docker compose down -v || true && \
+#         docker compose up -d
+#       "
+
+
 deploy:
   stage: deploy
-  image: alpine:latest
+  tags:
+    - deploy
+    - kls
+  image:
+    name: alpine:latest
+    entrypoint: [""]
+  variables:
+    IMAGE: "$IMAGE_NAME:$IMAGE_TAG"  
   before_script:
-    - apk add --no-cache openssh-client
-    - mkdir -p ~/.ssh
-    - cp "$SSH_KEY" ~/.ssh/id_rsa
-    - chmod 400 ~/.ssh/id_rsa
+    - apk add --no-cache curl
+    - curl -LO "https://dl.k8s.io/release/v1.32.0/bin/linux/amd64/kubectl"
+    - chmod +x kubectl
+    - mv kubectl /usr/local/bin/
   script:
-    - echo "Copying docker-compose.yml and .env to server..."
-    - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa docker-compose.yml root@$KLS_SERVER:/root/dev-portfolio/
-    - scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa .env root@$KLS_SERVER:/root/dev-portfolio/
-    - echo "Deploying containerized app..."
-    - |
-      ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa root@$KLS_SERVER "\
-        export IMAGE_NAME='$IMAGE_NAME'; \
-        export IMAGE_TAG='$IMAGE_TAG'; \
-        export REGISTRY_USER='$REGISTRY_USER'; \
-        export REGISTRY_PASS='$REGISTRY_PASS'; \
-        \
-        cd /root/dev-portfolio && \
-        docker login -u \"\$REGISTRY_USER\" -p \"\$REGISTRY_PASS\" && \
-        docker pull \"\$IMAGE_NAME:\$IMAGE_TAG\" && \
-        docker compose down -v || true && \
-        docker compose up -d
-      "
+    # Create kubeconfig file from env var
+    - echo "$KUBE_CONFIG" | base64 -d > kubeconfig
+    - export KUBECONFIG=$PWD/kubeconfig
+    - kubectl version 
+    - sed -i "s|IMAGE_PLACEHOLDER|$IMAGE|g" k8s/deployment.yaml
+    - kubectl apply -f k8s/

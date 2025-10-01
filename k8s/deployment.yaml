@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react-portfolio-web
+  labels:
+    app: react-portfolio-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: react-portfolio-web
+  template:
+    metadata:
+      labels:
+        app: react-portfolio-web
+    spec:
+      containers:
+      - name: react-portfolio-web
+        image: IMAGE_PLACEHOLDER
+        ports:
+        - containerPort: 80

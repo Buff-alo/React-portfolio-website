@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: react-portfolio-web-ingress
+  namespace: default
+spec:
+  entryPoints:
+     - websecure
+  routes:
+    - match: Host(`stream.kwadwolabs.cloud`)
+      kind: Rule
+      services:
+        - name: react-portfolio-web-service
+          port: 80
+  tls:
+    certResolver: myresolver
