@@ -7,7 +7,7 @@ spec:
   entryPoints:
      - websecure
   routes:
-    - match: Host(`stream.kwadwolabs.cloud`)
+    - match: Host(`www.kwadwolabs.cloud`)
       kind: Rule
       services:
         - name: react-portfolio-web-service
