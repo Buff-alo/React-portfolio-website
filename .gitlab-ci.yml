@@ -16,9 +16,9 @@ build:
   before_script:
     - echo "Logging in to Docker registry..."
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
-    
-    # - apk update  
-    # - apk add --no-cache qemu-user-static qemu-img || apk add --no-cache qemu-arm-static qemu-aarch64-static 
+
+    - apk update  
+    - apk add --no-cache qemu-user-static qemu-img || apk add --no-cache qemu-arm-static qemu-aarch64-static 
 
     # 2. Set up the Buildx builder instance
     - docker buildx create --use --name mybuilder
