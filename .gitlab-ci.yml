@@ -21,15 +21,15 @@ build:
     DOCKER_BUILDKIT: 1
 
   before_script:
-    - echo "Logging in to Docker registry..."
-    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin docker.io
+  - echo "Logging in to Docker registry..."
+  - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin docker.io
 
-    # 1. Install QEMU for multi-platform support
-    - docker run --privileged --rm tonistiigi/binfmt --install all
+  # Install QEMU for multi-platform support
+  - docker run --privileged --rm tonistiigi/binfmt --install all
 
-    # 2. Create and use the buildx builder directly with the DIND connection
-    - docker buildx create --name mybuilder --driver docker-container --use --buildkitd-flags '--allow-insecure-entitlement network.host'
-    - docker buildx inspect --bootstrap
+  # Create buildx builder using the current Docker environment
+  - docker buildx create --name mybuilder --use --driver docker-container || true
+  - docker buildx inspect --bootstrap
 
   script:
     - echo "Building multi-architecture Docker image for linux/amd64 and linux/arm64..."
