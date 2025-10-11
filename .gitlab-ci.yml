@@ -21,15 +21,19 @@ build:
     DOCKER_BUILDKIT: 1
 
   before_script:
-  - echo "Logging in to Docker registry..."
-  - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin docker.io
+    - echo "Logging in to Docker registry..."
+    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin docker.io
 
-  # Install QEMU for multi-platform support
-  - docker run --privileged --rm tonistiigi/binfmt --install all
+    # 1. Install QEMU for multi-platform support
+    - docker run --privileged --rm tonistiigi/binfmt --install all
 
-  # Create buildx builder using the current Docker environment
-  - docker buildx create --name mybuilder --use --driver docker-container || true
-  - docker buildx inspect --bootstrap
+    # 2. Create a proper Docker context for the DIND environment
+    - docker context create dind-context --docker "host=tcp://docker:2376,ca=/certs/client/ca.pem,cert=/certs/client/cert.pem,key=/certs/client/key.pem,tlsverify"
+    - docker context use dind-context
+
+    # 3. Create buildx builder using the context
+    - docker buildx create --name mybuilder --driver docker-container --use dind-context
+    - docker buildx inspect --bootstrap
 
   script:
     - echo "Building multi-architecture Docker image for linux/amd64 and linux/arm64..."
