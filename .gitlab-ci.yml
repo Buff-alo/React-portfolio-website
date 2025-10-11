@@ -26,13 +26,13 @@ build:
     # --------------------
 
   script:
-    # Use the activated builder instance for the multi-arch build
     - echo "Building multi-architecture Docker image for linux/amd64 and linux/arm64..."
-    - docker buildx build \
-      --platform linux/amd64,linux/arm64 \
-      -f docker/Dockerfile \
-      -t $IMAGE_NAME:$IMAGE_TAG \
-      --push .
+    - |
+      docker buildx build \
+        --platform linux/amd64,linux/arm64 \
+        -f docker/Dockerfile \
+        -t $IMAGE_NAME:$IMAGE_TAG \
+        --push .
 
     - echo "Successfully pushed multi-architecture manifest to registry."
 
