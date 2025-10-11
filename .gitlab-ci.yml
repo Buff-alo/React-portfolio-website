@@ -84,5 +84,11 @@ deploy:
     - echo "$KUBE_CONFIG" | base64 -d > kubeconfig
     - export KUBECONFIG=$PWD/kubeconfig
     - kubectl version 
+    - |
+      kubectl create secret docker-registry docker-registry-secret \
+        --docker-server=docker.io \
+        --docker-username=$REGISTRY_USER \
+        --docker-password=$REGISTRY_PASS \
+        --dry-run=client -o yaml | kubectl apply -f -
     - sed -i "s|IMAGE_PLACEHOLDER|$IMAGE|g" k8s/deployment.yaml
     - kubectl apply -f k8s/
