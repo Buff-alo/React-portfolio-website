@@ -8,27 +8,44 @@ stages:
 
 build:
   stage: build
-  # --- CHANGE THIS IMAGE ---
-  image: docker/buildx-master:latest # A good alternative for DIND environments
-  # -------------------------
+  # Use a stable Docker image and DIND with experimental features
+  image: docker:25.0.3-git
   services:
-    - docker:dind
+    - name: docker:25.0.3-dind
+      alias: docker
+      command: ["--experimental"] # Enables BuildKit features in DIND
+
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
+    # Set BuildKit flags for inline caching and progress output
+    BUILDKIT_INLINE_CACHE: 1
+    BUILDKIT_PROGRESS: plain
+    DOCKER_BUILDKIT: 1
 
   before_script:
-    - echo "Logging in to Docker registry..."
-    - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+    # 1. Log in to the registry using your custom variables
+    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin docker.io
 
-    # --- SIMPLIFIED BUILDX SETUP ---
-    # The new image handles the creation and driver setup internally.
-    # We only need to bootstrap/inspect the *default* builder provided by the image.
+    # 2. Install QEMU for multi-platform support
+    # This registers the necessary binary formats for cross-architecture emulation
+    - docker run --privileged --rm tonistiigi/binfmt --install all
+
+    # 3. Create and use a new Buildx builder with the container driver
+    # This prevents the previous driver incompatibility error (multi-arch requires container driver)
+    - docker buildx create --use --name mybuilder --driver docker-container || true
     - docker buildx inspect --bootstrap
 
   script:
     - echo "Building multi-architecture Docker image for linux/amd64 and linux/arm64..."
-    # The build command remains the same
-    - docker buildx build --platform linux/amd64,linux/arm64 -f docker/Dockerfile -t $IMAGE_NAME:$IMAGE_TAG --push .
+
+    # Build and push the image for both architectures and the manifest list
+    # Note: Caching is tricky with custom registries; using only the simple push for now.
+    - docker buildx build \
+      --tag $IMAGE_NAME:$IMAGE_TAG \
+      --platform linux/amd64,linux/arm64 \
+      --push \
+      -f docker/Dockerfile \
+      .
 
     - echo "Successfully pushed multi-architecture manifest to registry."
 
