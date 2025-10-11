@@ -6,46 +6,73 @@ stages:
   - build
   - deploy
 
-build:
+.build_template: &build_template
+  stage: build
+  image: 
+    name: gcr.io/kaniko-project/executor:latest
+    entrypoint: [""]
+  before_script:
+    - mkdir -p /kaniko/.docker
+    - echo "{\"auths\":{\"docker.io\":{\"auth\":\"$(echo -n "$REGISTRY_USER:$REGISTRY_PASS" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+
+build_amd64:
+  <<: *build_template
+  script:
+    - |
+      /kaniko/executor \
+        --context "${CI_PROJECT_DIR}" \
+        --dockerfile "${CI_PROJECT_DIR}/docker/Dockerfile" \
+        --destination "${IMAGE_NAME}:${IMAGE_TAG}-amd64" \
+        --custom-platform "linux/amd64" \
+        --cache=true \
+        --cache-repo="${IMAGE_NAME}/cache" \
+        --cache-copy-layers \
+        --cache-run-layers
+
+build_arm64:
+  <<: *build_template
+  script:
+    - |
+      /kaniko/executor \
+        --context "${CI_PROJECT_DIR}" \
+        --dockerfile "${CI_PROJECT_DIR}/docker/Dockerfile" \
+        --destination "${IMAGE_NAME}:${IMAGE_TAG}-arm64" \
+        --custom-platform "linux/arm64" \
+        --cache=true \
+        --cache-repo="${IMAGE_NAME}/cache" \
+        --cache-copy-layers \
+        --cache-run-layers
+
+create_manifest:
   stage: build
   image: docker:25.0.3-git
-  services:
-    - name: docker:25.0.3-dind
-      alias: docker
-
-  variables:
-    DOCKER_TLS_CERTDIR: "/certs"
-    DOCKER_HOST: "tcp://docker:2376"
-    DOCKER_TLS_VERIFY: "1"
-    DOCKER_CERT_PATH: "/certs/client"
-    BUILDKIT_INLINE_CACHE: 1
-    BUILDKIT_PROGRESS: plain
-    DOCKER_BUILDKIT: 1
-
+  needs: ["build_amd64", "build_arm64"]
   before_script:
-    - echo "Logging in to Docker registry..."
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin docker.io
-
-    # Install QEMU for multi-platform support
-    - docker run --privileged --rm tonistiigi/binfmt --install all
-
-    # Wait for Docker daemon to be ready
-    - timeout 30 sh -c 'until docker info >/dev/null 2>&1; do echo "Waiting for Docker daemon..."; sleep 1; done'
-
-    # Create buildx builder with simple approach
-    - docker buildx version
-    - docker buildx create --name mybuilder --use --bootstrap
-    - docker buildx inspect --bootstrap
-
   script:
-    - echo "Building multi-architecture Docker image for linux/amd64 and linux/arm64..."
     - |
-      docker buildx build \
-        --tag $IMAGE_NAME:$IMAGE_TAG \
-        --platform linux/amd64,linux/arm64 \
-        --push \
-        -f docker/Dockerfile .
-    - echo "Successfully pushed multi-architecture manifest to registry."
+      # Create and push manifest list
+      docker manifest create \
+        $IMAGE_NAME:$IMAGE_TAG \
+        $IMAGE_NAME:${IMAGE_TAG}-amd64 \
+        $IMAGE_NAME:${IMAGE_TAG}-arm64
+      
+      # Annotate each architecture
+      docker manifest annotate \
+        $IMAGE_NAME:$IMAGE_TAG \
+        $IMAGE_NAME:${IMAGE_TAG}-amd64 \
+        --arch amd64 --os linux
+      
+      docker manifest annotate \
+        $IMAGE_NAME:$IMAGE_TAG \
+        $IMAGE_NAME:${IMAGE_TAG}-arm64 \
+        --arch arm64 --os linux
+      
+      # Push the manifest
+      docker manifest push $IMAGE_NAME:$IMAGE_TAG
+      
+      # Clean up individual arch images (optional)
+      docker rmi $IMAGE_NAME:${IMAGE_TAG}-amd64 $IMAGE_NAME:${IMAGE_TAG}-arm64 || true
 
 deploy:
   stage: deploy
@@ -63,7 +90,6 @@ deploy:
     - chmod +x kubectl
     - mv kubectl /usr/local/bin/
   script:
-    # Create kubeconfig file from env var
     - echo "$KUBE_CONFIG" | base64 -d > kubeconfig
     - export KUBECONFIG=$PWD/kubeconfig
     - kubectl version
