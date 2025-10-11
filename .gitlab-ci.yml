@@ -5,38 +5,39 @@ variables:
 stages:
   - build
   - deploy
+
+  
 build:
   stage: build
-  image: 
-    name: gcr.io/kaniko-project/executor:latest
-    entrypoint: [""]
+  image: quay.io/buildah/stable:latest
+  variables:
+    STORAGE_DRIVER: vfs
+    BUILDAH_FORMAT: docker
   before_script:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"docker.io\":{\"auth\":\"$(echo -n "$REGISTRY_USER:$REGISTRY_PASS" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - buildah login -u "$REGISTRY_USER" -p "$REGISTRY_PASS" docker.io
   script:
     - |
-      # Build for both architectures
-      for arch in amd64 arm64; do
-        /kaniko/executor \
-          --context "${CI_PROJECT_DIR}" \
-          --dockerfile "${CI_PROJECT_DIR}/docker/Dockerfile" \
-          --destination "${IMAGE_NAME}:${IMAGE_TAG}-${arch}" \
-          --custom-platform "linux/${arch}" \
-          --cache=true \
-          --cache-repo="${IMAGE_NAME}/cache"
-      done
+      # Create manifest list
+      buildah manifest create $IMAGE_NAME:$IMAGE_TAG
       
-    # Install docker CLI for manifest creation
-    - |
-      apk add --no-cache docker-cli
-      docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS" docker.io
+      # Build and add amd64
+      buildah bud \
+        --arch=amd64 \
+        --timestamp 0 \
+        --manifest $IMAGE_NAME:$IMAGE_TAG \
+        -f docker/Dockerfile .
       
-      docker manifest create \
+      # Build and add arm64
+      buildah bud \
+        --arch=arm64 \
+        --timestamp 0 \
+        --manifest $IMAGE_NAME:$IMAGE_TAG \
+        -f docker/Dockerfile .
+      
+      # Push the manifest list
+      buildah manifest push --all \
         $IMAGE_NAME:$IMAGE_TAG \
-        $IMAGE_NAME:${IMAGE_TAG}-amd64 \
-        $IMAGE_NAME:${IMAGE_TAG}-arm64
-      
-      docker manifest push $IMAGE_NAME:$IMAGE_TAG
+        docker://$IMAGE_NAME:$IMAGE_TAG
 
 deploy:
   stage: deploy
