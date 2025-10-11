@@ -5,8 +5,7 @@ variables:
 stages:
   - build
   - deploy
-
-.build_template: &build_template
+build:
   stage: build
   image: 
     name: gcr.io/kaniko-project/executor:latest
@@ -14,65 +13,30 @@ stages:
   before_script:
     - mkdir -p /kaniko/.docker
     - echo "{\"auths\":{\"docker.io\":{\"auth\":\"$(echo -n "$REGISTRY_USER:$REGISTRY_PASS" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
-
-build_amd64:
-  <<: *build_template
   script:
     - |
-      /kaniko/executor \
-        --context "${CI_PROJECT_DIR}" \
-        --dockerfile "${CI_PROJECT_DIR}/docker/Dockerfile" \
-        --destination "${IMAGE_NAME}:${IMAGE_TAG}-amd64" \
-        --custom-platform "linux/amd64" \
-        --cache=true \
-        --cache-repo="${IMAGE_NAME}/cache" \
-        --cache-copy-layers \
-        --cache-run-layers
-
-build_arm64:
-  <<: *build_template
-  script:
+      # Build for both architectures
+      for arch in amd64 arm64; do
+        /kaniko/executor \
+          --context "${CI_PROJECT_DIR}" \
+          --dockerfile "${CI_PROJECT_DIR}/docker/Dockerfile" \
+          --destination "${IMAGE_NAME}:${IMAGE_TAG}-${arch}" \
+          --custom-platform "linux/${arch}" \
+          --cache=true \
+          --cache-repo="${IMAGE_NAME}/cache"
+      done
+      
+    # Install docker CLI for manifest creation
     - |
-      /kaniko/executor \
-        --context "${CI_PROJECT_DIR}" \
-        --dockerfile "${CI_PROJECT_DIR}/docker/Dockerfile" \
-        --destination "${IMAGE_NAME}:${IMAGE_TAG}-arm64" \
-        --custom-platform "linux/arm64" \
-        --cache=true \
-        --cache-repo="${IMAGE_NAME}/cache" \
-        --cache-copy-layers \
-        --cache-run-layers
-
-create_manifest:
-  stage: build
-  image: docker:25.0.3-git
-  needs: ["build_amd64", "build_arm64"]
-  before_script:
-    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin docker.io
-  script:
-    - |
-      # Create and push manifest list
+      apk add --no-cache docker-cli
+      docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS" docker.io
+      
       docker manifest create \
         $IMAGE_NAME:$IMAGE_TAG \
         $IMAGE_NAME:${IMAGE_TAG}-amd64 \
         $IMAGE_NAME:${IMAGE_TAG}-arm64
       
-      # Annotate each architecture
-      docker manifest annotate \
-        $IMAGE_NAME:$IMAGE_TAG \
-        $IMAGE_NAME:${IMAGE_TAG}-amd64 \
-        --arch amd64 --os linux
-      
-      docker manifest annotate \
-        $IMAGE_NAME:$IMAGE_TAG \
-        $IMAGE_NAME:${IMAGE_TAG}-arm64 \
-        --arch arm64 --os linux
-      
-      # Push the manifest
       docker manifest push $IMAGE_NAME:$IMAGE_TAG
-      
-      # Clean up individual arch images (optional)
-      docker rmi $IMAGE_NAME:${IMAGE_TAG}-amd64 $IMAGE_NAME:${IMAGE_TAG}-arm64 || true
 
 deploy:
   stage: deploy
