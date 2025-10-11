@@ -16,18 +16,18 @@ build:
   before_script:
     - echo "Logging in to Docker registry..."
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
-
-    - apk update  
-    - apk add --no-cache qemu-user-static qemu-img || apk add --no-cache qemu-arm-static qemu-aarch64-static 
-
-    # 2. Set up the Buildx builder instance
-    - docker buildx create --use --name mybuilder
-    - docker buildx inspect --bootstrap mybuilder
+    
+    # --- BUILDX SETUP ---
+    # 1. Ensure the default builder is activated and running in bootstrap mode
+    - docker buildx inspect default > /dev/null 2>&1 || docker buildx create --use default
+    
+    # 2. Inspect and bootstrap the current builder, which should now be linked to DIND
+    - docker buildx inspect --bootstrap
+    # --------------------
 
   script:
+    # Use the activated builder instance for the multi-arch build
     - echo "Building multi-architecture Docker image for linux/amd64 and linux/arm64..."
-
-    # 3. Use buildx to build and push the multi-arch image in one command
     - docker buildx build \
       --platform linux/amd64,linux/arm64 \
       -f docker/Dockerfile \
