@@ -12,10 +12,12 @@ build:
   services:
     - name: docker:25.0.3-dind
       alias: docker
-      command: ["--experimental"]
 
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_HOST: "tcp://docker:2376"
+    DOCKER_TLS_VERIFY: "1"
+    DOCKER_CERT_PATH: "/certs/client"
     BUILDKIT_INLINE_CACHE: 1
     BUILDKIT_PROGRESS: plain
     DOCKER_BUILDKIT: 1
@@ -24,15 +26,15 @@ build:
     - echo "Logging in to Docker registry..."
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin docker.io
 
-    # 1. Install QEMU for multi-platform support
+    # Install QEMU for multi-platform support
     - docker run --privileged --rm tonistiigi/binfmt --install all
 
-    # 2. Create a proper Docker context for the DIND environment
-    - docker context create dind-context --docker "host=tcp://docker:2376,tls=true,tlsverify=true,ca=/certs/client/ca.pem,cert=/certs/client/cert.pem,key=/certs/client/key.pem"
-    - docker context use dind-context
+    # Wait for Docker daemon to be ready
+    - timeout 30 sh -c 'until docker info >/dev/null 2>&1; do echo "Waiting for Docker daemon..."; sleep 1; done'
 
-    # 3. Create buildx builder using the context
-    - docker buildx create --name mybuilder --driver docker-container --use dind-context
+    # Create buildx builder with simple approach
+    - docker buildx version
+    - docker buildx create --name mybuilder --use --bootstrap
     - docker buildx inspect --bootstrap
 
   script:
