@@ -8,35 +8,27 @@ stages:
 
 build:
   stage: build
-  image: docker:latest
+  # --- CHANGE THIS IMAGE ---
+  image: docker/buildx-master:latest # A good alternative for DIND environments
+  # -------------------------
   services:
     - docker:dind
   variables:
     DOCKER_TLS_CERTDIR: "/certs"
+
   before_script:
     - echo "Logging in to Docker registry..."
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
-    
-    # --- BUILDX SETUP ---
-    # Delete the existing builder instance to ensure a clean start
-    - docker buildx rm default || true
 
-    # Create a new builder instance using the 'docker-container' driver
-    # This driver is required for multi-arch builds in DIND environments.
-    - docker buildx create --use --name mybuilder --driver docker-container
-    
-    # Inspect and bootstrap the new builder (which should use the 'docker-container' driver)
-    - docker buildx inspect --bootstrap mybuilder
-    # --------------------
+    # --- SIMPLIFIED BUILDX SETUP ---
+    # The new image handles the creation and driver setup internally.
+    # We only need to bootstrap/inspect the *default* builder provided by the image.
+    - docker buildx inspect --bootstrap
 
   script:
     - echo "Building multi-architecture Docker image for linux/amd64 and linux/arm64..."
-    - |
-      docker buildx build \
-        --platform linux/amd64,linux/arm64 \
-        -f docker/Dockerfile \
-        -t $IMAGE_NAME:$IMAGE_TAG \
-        --push .
+    # The build command remains the same
+    - docker buildx build --platform linux/amd64,linux/arm64 -f docker/Dockerfile -t $IMAGE_NAME:$IMAGE_TAG --push .
 
     - echo "Successfully pushed multi-architecture manifest to registry."
 
