@@ -18,11 +18,15 @@ build:
     - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
     
     # --- BUILDX SETUP ---
-    # 1. Ensure the default builder is activated and running in bootstrap mode
-    - docker buildx inspect default > /dev/null 2>&1 || docker buildx create --use default
+    # Delete the existing builder instance to ensure a clean start
+    - docker buildx rm default || true
+
+    # Create a new builder instance using the 'docker-container' driver
+    # This driver is required for multi-arch builds in DIND environments.
+    - docker buildx create --use --name mybuilder --driver docker-container
     
-    # 2. Inspect and bootstrap the current builder, which should now be linked to DIND
-    - docker buildx inspect --bootstrap
+    # Inspect and bootstrap the new builder (which should use the 'docker-container' driver)
+    - docker buildx inspect --bootstrap mybuilder
     # --------------------
 
   script:
