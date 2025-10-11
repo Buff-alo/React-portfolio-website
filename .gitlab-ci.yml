@@ -28,7 +28,7 @@ build:
     - docker run --privileged --rm tonistiigi/binfmt --install all
 
     # 2. Create a proper Docker context for the DIND environment
-    - docker context create dind-context --docker "host=tcp://docker:2376,ca=/certs/client/ca.pem,cert=/certs/client/cert.pem,key=/certs/client/key.pem,tlsverify"
+    - docker context create dind-context --docker "host=tcp://docker:2376,tls=true,tlsverify=true,ca=/certs/client/ca.pem,cert=/certs/client/cert.pem,key=/certs/client/key.pem"
     - docker context use dind-context
 
     # 3. Create buildx builder using the context
