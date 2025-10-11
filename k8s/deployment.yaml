@@ -19,5 +19,6 @@ spec:
       containers:
       - name: react-portfolio-web
         image: IMAGE_PLACEHOLDER
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
