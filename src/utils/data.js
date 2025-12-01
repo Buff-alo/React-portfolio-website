@@ -20,7 +20,7 @@ import {
 
 
 
-import { FiGithub, FiLinkedin, FiMail, FiTwitter } from "react-icons/fi";
+import { FiGithub, FiGitlab, FiLinkedin, FiMail, FiTwitter } from "react-icons/fi";
 
 import PROJECT_IMG_1 from "../assets/images/project1.png";
 
@@ -185,29 +185,42 @@ export const SOCIAL_LINKS = [
     name: "GitHub",
     icon: FiGithub,
     url: "https://github.com/Buff-alo",
-    color: "hover:text-gray-400",
-    bgColor: "hover:bg-gray-800",
+    // GitHub's specific purple/black or just white
+    color: "hover:text-white", 
+    bgColor: "hover:bg-[#333]", 
   },
   {
     name: "LinkedIn",
     icon: FiLinkedin,
     url: "https://www.linkedin.com/in/kwadwo-boakye",
-    color: "hover:text-gray-400",
-    bgColor: "hover:bg-gray-800",
+    // LinkedIn Blue
+    color: "hover:text-white",
+    bgColor: "hover:bg-[#0077b5]",
   },
   {
-    name: "Twitter",
-    icon: FiTwitter,
+    name: "X (Twitter)",
+    // Swapped to FaXTwitter for accuracy
+    icon: FiTwitter, 
     url: "https://x.com/boakkwadwo",
-    color: "hover:text-gray-400",
-    bgColor: "hover:bg-gray-800",
+    // X Black
+    color: "hover:text-white",
+    bgColor: "hover:bg-black",
+  },
+  {
+    name: "GitLab",
+    icon: FiGitlab,
+    url: "https://gitlab.com/boakkwadwo2",
+    // GitLab Orange
+    color: "hover:text-white",
+    bgColor: "hover:bg-[#FC6D26]",
   },
   {
     name: "Email",
     icon: FiMail,
     url: "mailto:contact@kwadwolabs.cloud",
-    color: "hover:text-gray-400",
-    bgColor: "hover:bg-gray-800",
+    // Generic Green or Blue for contact
+    color: "hover:text-white",
+    bgColor: "hover:bg-emerald-600",
   },
 ];
 
