@@ -1,6 +1,6 @@
 variables:
   IMAGE_NAME: buffalo147/dev-apps
-  IMAGE_TAG: portfolio-web
+  IMAGE_TAG: portfolio-web-$CI_COMMIT_SHORT_SHA
 
 stages:
   - build
@@ -44,28 +44,25 @@ deploy:
   tags:
     - deploy
     - kls
-  image:
-    name: alpine:latest
+  # Use a pre-built image with kubectl (Faster/Safer)
+  image: 
+    name: bitnami/kubectl:latest
     entrypoint: [""]
   variables:
     IMAGE: "$IMAGE_NAME:$IMAGE_TAG"
-  before_script:
-    - apk add --no-cache curl
-    - 'KUBECTL_ARCH=$(uname -m | sed -e "s/^x86_64$/amd64/" -e "s/^aarch64$/arm64/" -e "s/^armv7l$/arm/") && [ -n "$KUBECTL_ARCH" ] || { echo "Unsupported architecture: $(uname -m)"; exit 1; }'
-    - 'echo "Downloading kubectl for architecture: $KUBECTL_ARCH"'
-    - 'curl -LO "https://dl.k8s.io/release/v1.32.0/bin/linux/${KUBECTL_ARCH}/kubectl"'
-    - chmod +x kubectl
-    - mv kubectl /usr/local/bin/
-
   script:
     - echo "$KUBE_CONFIG" | base64 -d > kubeconfig
     - export KUBECONFIG=$PWD/kubeconfig
-    - kubectl version
-    - |
-      kubectl create secret docker-registry docker-registry-secret \
-        --docker-server=docker.io \
-        --docker-username=$REGISTRY_USER \
-        --docker-password=$REGISTRY_PASS \
+    
+    # Create Registry Secret
+    - kubectl create secret docker-registry docker-registry-secret
+        --docker-server=docker.io
+        --docker-username=$REGISTRY_USER
+        --docker-password=$REGISTRY_PASS
         --dry-run=client -o yaml | kubectl apply -f -
+        
+    # Update Deployment image
     - sed -i "s|IMAGE_PLACEHOLDER|$IMAGE|g" k8s/deployment.yaml
+    
+    # Apply changes
     - kubectl apply -f k8s/
