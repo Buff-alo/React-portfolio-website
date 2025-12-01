@@ -6,13 +6,15 @@ WORKDIR /app
 # Copy dependency files
 COPY ../package*.json ./
 
-RUN npm install
+RUN npm ci
 
 # Copy the rest of the React app source code
 COPY ../ ./
 
 RUN npm run build
-RUN ls -l /app/dist  # Confirm build output exists
+
+# Confirm build output exists
+RUN ls -l /app/dist  
 
 # Step 2: Serve with Nginx
 FROM nginx:alpine
