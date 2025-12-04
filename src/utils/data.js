@@ -23,6 +23,7 @@ import {
 import { FiGithub, FiGitlab, FiLinkedin, FiMail, FiTwitter } from "react-icons/fi";
 
 import PROJECT_IMG_1 from "../assets/images/project1.png";
+import PROJECT_IMG_2 from "../assets/images/project2.png";
 
 export const HERO_TAGS = ["Docker", "Terraform", "Ansible", "Django"];
 
@@ -34,8 +35,9 @@ export const SKILLS_CAT = [
     skills: [
       { name: "Terraform", level: 90, color: "bg-purple-500" },
       { name: "Ansible", level: 85, color: "bg-gray-500" },
-      { name: "Nomad", level: 80, color: "bg-green-500" },
+      { name: "Nomad", level: 75, color: "bg-green-500" },
       { name: "Consul", level: 80, color: "bg-pink-500" },
+      { name: "Kubernetes", level: 85, color: "bg-blue-600" },
       { name: "Docker", level: 90, color: "bg-blue-500" },
       { name: "GitLab CI/CD", level: 85, color: "bg-orange-500" },
     ],
@@ -46,6 +48,7 @@ export const SKILLS_CAT = [
     description: "Developing APIs and server-side logic for web applications.",
     skills: [
       { name: "Django", level: 60, color: "bg-green-500" },
+      { name: "Django REST Framework", level: 50, color: "bg-teal-500" },
       { name: "Laravel", level: 20, color: "bg-red-400" },
     ],
   },
@@ -66,6 +69,8 @@ export const SKILLS_CAT = [
     description: "Designing and managing reliable data storage systems.",
     skills: [
       { name: "MySql", level: 70, color: "bg-blue-500" },
+      { name: "PostgreSQL", level: 65, color: "bg-indigo-500" },
+      { name: "SQLite", level: 80, color: "bg-gray-500" },
       // { name: "MongoDB", level: 75, color: "bg-green-500" },
     ],
   },
@@ -83,7 +88,7 @@ export const SKILLS_CAT = [
 export const TECH_STACK = [
   { name: "Linux", icon: "logos:linux-tux" },
   { name: "Git", icon: "logos:git-icon" },
-  { name: "GitLab CI", icon: "logos:gitlab" },
+  { name: "GitLab CI", icon: "logos:gitlab-icon" },
   { name: "Nginx", icon: "logos:nginx" },
   { name: "Systemd", icon: "material-icon-theme:systemd-light" },
   { name: "Bash", icon: "simple-icons:gnubash" },
@@ -110,6 +115,18 @@ export const PROJECTS = [
     tags: ["Terraform", "Ansible", "Docker", "GitLab CI", "Traefik"],
     liveUrl: "#",
     repoUrl: "https://github.com/Buff-alo/Infrastructure",
+    featured: true,
+    category: "DevOps",
+  },
+  {
+    id: 2,
+    title: "Multi-cloud K3s cluster & DevOps Pipeline",
+    description:
+      "A multi-cloud Kubernetes (K3s) cluster setup using Terraform and Ansible, with a CI/CD pipeline via GitLab CI.",
+    image: PROJECT_IMG_2,
+    tags: ["Terraform", "Ansible", "Kubernetes", "GitLab CI", "Traefik"],
+    liveUrl: "#",
+    repoUrl: "https://github.com/Buff-alo/kubernetes-infra",
     featured: true,
     category: "DevOps",
   },
