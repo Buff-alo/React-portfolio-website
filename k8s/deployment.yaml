@@ -22,3 +22,12 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+  tolerations:
+      - key: "resource"
+        operator: "Equal"
+        value: "low"
+        effect: "NoSchedule"
+        
+      # 2. FORCE it to run on AMD hardware (Optional, if you only want it there)
+  nodeSelector:
+    kubernetes.io/arch: amd64
