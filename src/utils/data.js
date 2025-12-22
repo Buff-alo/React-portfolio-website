@@ -49,6 +49,7 @@ export const SKILLS_CAT = [
     skills: [
       { name: "Django", level: 60, color: "bg-green-500" },
       { name: "Django REST Framework", level: 50, color: "bg-teal-500" },
+      { name: "Django Ninja", level: 40, color: "bg-gray-800" },
       { name: "Laravel", level: 20, color: "bg-red-400" },
     ],
   },
@@ -61,6 +62,7 @@ export const SKILLS_CAT = [
       { name: "JavaScript", level: 80, color: "bg-yellow-400" },
       { name: "TypeScript", level: 70, color: "bg-indigo-600" },
       { name: "Bash", level: 75, color: "bg-gray-600" },
+      { name: "PHP", level: 40, color: "bg-purple-600" },
     ],
   },
   {

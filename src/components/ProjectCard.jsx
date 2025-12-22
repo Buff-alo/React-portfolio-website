@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // eslint-disable-line no-unused-vars
 import { ExternalLink } from "lucide-react";
 
-import { FiGift, FiGithub } from "react-icons/fi";
+import { FiGithub } from "react-icons/fi";
 
-const ProjectCard = ({ project, index, isDarkMode }) => {
+const ProjectCard = ({ project, isDarkMode }) => {
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -25,11 +25,10 @@ const ProjectCard = ({ project, index, isDarkMode }) => {
       className="group relative"
     >
       <div
-        className={`rounded-2xl overflow-hidden border transition-all duration-300 ${
-          isDarkMode
+        className={`rounded-2xl overflow-hidden border transition-all duration-300 ${isDarkMode
             ? "bg-gray-900/50 border-gray-800 hover:border-gray-700 hover:shadow-2xl hover:shadow-blue-500/10"
             : "bg-white/80 border-gray-200 hover:border-gray-300 hover:shadow-2xl hover:shadow-blue-500/10"
-        } backdrop-blur-sm`}
+          } backdrop-blur-sm`}
       >
         {/* Project Image */}
         <div className="relative overflow-hidden">
@@ -51,11 +50,10 @@ const ProjectCard = ({ project, index, isDarkMode }) => {
           {/* Category Badge */}
           <div className="absolute top-4 right-4">
             <span
-              className={`text-xs px-3 py-1 rounded-full font-medium ${
-                isDarkMode
+              className={`text-xs px-3 py-1 rounded-full font-medium ${isDarkMode
                   ? "bg-gray-800/80 text-gray-300"
                   : "bg-white/80 text-gray-700"
-              } backdrop-blur-sm`}
+                } backdrop-blur-sm`}
             >
               {project.category}
             </span>
@@ -96,9 +94,8 @@ const ProjectCard = ({ project, index, isDarkMode }) => {
           <h3 className="text-xl font-medium mb-3 group-hover:text-blue-500 transition-colors ">{project.title}</h3>
 
           <p
-            className={`text-sm leading-relaxed mb-4 ${
-              isDarkMode ? "text-gray-400" : "text-gray-600"
-            }`}
+            className={`text-sm leading-relaxed mb-4 ${isDarkMode ? "text-gray-400" : "text-gray-600"
+              }`}
           >
             {project.description}
           </p>
@@ -108,11 +105,10 @@ const ProjectCard = ({ project, index, isDarkMode }) => {
             {project.tags.map((tag, tagIndex) => (
               <span
                 key={tagIndex}
-                className={`text-xs px-3 py-1 rounded-full ${
-                  isDarkMode
+                className={`text-xs px-3 py-1 rounded-full ${isDarkMode
                     ? "bg-gray-800 text-gray-300"
                     : "bg-gray-100 text-gray-700"
-                }`}
+                  }`}
               >
                 {tag}
               </span>
