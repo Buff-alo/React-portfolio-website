@@ -9,7 +9,8 @@ import TextInput from "../input/TextInput";
 import SuccessModal from "../SuccessModal";
 
 // Get your access key from https://web3forms.com/
-const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+// Support runtime environment variables for Docker/K8s
+const WEB3FORMS_ACCESS_KEY = window?._env_?.VITE_WEB3FORMS_ACCESS_KEY || import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
 
 const ContactSection = () => {
   const { isDarkMode } = useTheme();
