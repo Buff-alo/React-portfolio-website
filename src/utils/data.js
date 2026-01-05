@@ -1,4 +1,4 @@
-import { Code, Frown } from "lucide-react";
+import { Code } from "lucide-react";
 import {
   Code2,
   GraduationCap,
@@ -13,7 +13,6 @@ import {
   Server,
   Cloud,
   Mail,
-  Mailbox,
   MapPin,
   Phone,
 } from "lucide-react";
@@ -205,8 +204,8 @@ export const SOCIAL_LINKS = [
     icon: FiGithub,
     url: "https://github.com/Buff-alo",
     // GitHub's specific purple/black or just white
-    color: "hover:text-white", 
-    bgColor: "hover:bg-[#333]", 
+    color: "hover:text-white",
+    bgColor: "hover:bg-[#333]",
   },
   {
     name: "LinkedIn",
@@ -219,7 +218,7 @@ export const SOCIAL_LINKS = [
   {
     name: "X (Twitter)",
     // Swapped to FaXTwitter for accuracy
-    icon: FiTwitter, 
+    icon: FiTwitter,
     url: "https://x.com/boakkwadwo",
     // X Black
     color: "hover:text-white",
@@ -253,10 +252,12 @@ export const CONTACT_INFO = [
     icon: Phone,
     label: "Phone",
     value: "+233 20 116 2943",
+    copyable: true,
   },
   {
     icon: Mail,
     label: "Email",
     value: "contact@kwadwolabs.cloud",
+    copyable: true,
   },
 ];

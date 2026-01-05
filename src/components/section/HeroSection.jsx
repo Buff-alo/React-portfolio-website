@@ -1,16 +1,23 @@
 // eslint-disable-next-line no-unused-vars
 import { easeOut, motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Mail } from "lucide-react";
+import { ArrowDown, Mail, Download } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext";
 import { FiGithub, FiLinkedin } from "react-icons/fi";
 import React from "react";
 
 import { containerVariants, itemVariants } from "../../utils/helper";
 import { HERO_TAGS } from "../../utils/data";
+import useTypewriter from "../../hooks/useTypewriter";
 
 import PROFILE_PIC from "../../assets/images/profile1.jpg";
 const HeroSection = () => {
   const { isDarkMode } = useTheme();
+  const typedRole = useTypewriter(
+    ["DevOps Engineer", "Backend Developer", "Cloud Architect"],
+    80,
+    40,
+    2500
+  );
 
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 100], [0, -50]);
@@ -49,9 +56,8 @@ const HeroSection = () => {
 
   return (
     <div
-      className={`min-h-screen transition-all duration-500 ${
-        isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
-      }`}
+      className={`min-h-screen transition-all duration-500 ${isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
+        }`}
     >
       {/* Hero Section */}
       <motion.section
@@ -70,9 +76,8 @@ const HeroSection = () => {
               ease: "linear",
               repeat: Infinity,
             }}
-            className={`absolute top-20 right-10 w-64 h-64 rounded-full blur-3xl opacity-10 ${
-              isDarkMode ? "bg-blue-500" : "bg-blue-400"
-            }`}
+            className={`absolute top-20 right-10 w-64 h-64 rounded-full blur-3xl opacity-10 ${isDarkMode ? "bg-blue-500" : "bg-blue-400"
+              }`}
           />
           <motion.div
             animate={{
@@ -84,9 +89,8 @@ const HeroSection = () => {
               ease: "linear",
               repeat: Infinity,
             }}
-            className={`absolute bottom-20 left-20 w-48 h-48 rounded-full blur-3xl opacity-10 ${
-              isDarkMode ? "bg-purple-500" : "bg-purple-400"
-            }`}
+            className={`absolute bottom-20 left-20 w-48 h-48 rounded-full blur-3xl opacity-10 ${isDarkMode ? "bg-purple-500" : "bg-purple-400"
+              }`}
           />
         </div>
 
@@ -104,9 +108,8 @@ const HeroSection = () => {
                 <div className="w-32 h-32 mx-auto relative">
                   <motion.div
                     whileHover={{ scale: 1.05 }}
-                    className={`w-full h-32 rounded-2xl overflow-hidden border-4  ${
-                      isDarkMode ? "border-gray-800" : "border-gray-300"
-                    } shadow-2xl`}
+                    className={`w-full h-32 rounded-2xl overflow-hidden border-4  ${isDarkMode ? "border-gray-800" : "border-gray-300"
+                      } shadow-2xl`}
                   >
                     <img
                       src={PROFILE_PIC}
@@ -130,11 +133,10 @@ const HeroSection = () => {
               {/* Content -Mobile */}
               <motion.div
                 variants={textVariants}
-                className={`text-sm uppercase tracking-widest ${
-                  isDarkMode ? "text-gray-500" : "text-gray-600"
-                } mb-4`}
+                className={`text-sm uppercase tracking-widest ${isDarkMode ? "text-gray-500" : "text-gray-600"
+                  } mb-4 h-6`}
               >
-                DevOps & Backend Engineer
+                {typedRole}<span className="animate-pulse">|</span>
               </motion.div>
 
               <motion.h1
@@ -155,9 +157,8 @@ const HeroSection = () => {
 
               <motion.p
                 variants={itemVariants}
-                className={`text-base md:text-lg ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                } mb-8 max-w-xl mx-auto font-light leading-relaxed`}
+                className={`text-base md:text-lg ${isDarkMode ? "text-gray-400" : "text-gray-600"
+                  } mb-8 max-w-xl mx-auto font-light leading-relaxed`}
               >
                 I build and automate secure cloud infrastructure, scalable
                 backends, and efficient developer pipelines using modern DevOps
@@ -181,11 +182,10 @@ const HeroSection = () => {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => scrollToSection("contact")}
-                  className={`border ${
-                    isDarkMode
-                      ? "bg-gray-700 hover:border-gray-600 text-gray-300"
-                      : "border-gray-300 hover:border-gray-400 text-gray-700"
-                  } px-8 py-3 rounded-full text-sm  uppercase tracking-wider font-medium transition-all duration-300 flex items-center gap-2`}
+                  className={`border ${isDarkMode
+                    ? "bg-gray-700 hover:border-gray-600 text-gray-300"
+                    : "border-gray-300 hover:border-gray-400 text-gray-700"
+                    } px-8 py-3 rounded-full text-sm  uppercase tracking-wider font-medium transition-all duration-300 flex items-center gap-2`}
                 >
                   Get In Touch
                 </motion.button>
@@ -196,19 +196,23 @@ const HeroSection = () => {
                 className="flex justify-center space-x-6 mb-8"
               >
                 {[
-                  { icon: FiGithub, href: "https://github.com/Buff-alo" },
-                  { icon: FiLinkedin, href: "https://www.linkedin.com/in/kwadwo-boakye" },
-                  { icon: Mail, href: "mailto:contact@kwadwolabs.cloud" },
+                  { icon: FiGithub, href: "https://github.com/Buff-alo", label: "GitHub" },
+                  { icon: FiLinkedin, href: "https://www.linkedin.com/in/kwadwo-boakye", label: "LinkedIn" },
+                  { icon: Mail, href: "mailto:contact@kwadwolabs.cloud", label: "Email" },
+                  { icon: Download, href: "/resume.pdf", label: "Resume", download: true },
                 ].map((social, index) => (
                   <motion.a
                     key={index}
                     whileHover={{ scale: 1.1, y: -3 }}
                     href={social.href}
-                    className={`p-3 rounded-full transition-colors ${
-                      isDarkMode
-                        ? "text-gray-400 hover:bg-gray-800 hover:text-white"
-                        : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                    }`}
+                    download={social.download || undefined}
+                    target={social.download ? undefined : "_blank"}
+                    rel={social.download ? undefined : "noopener noreferrer"}
+                    aria-label={social.label}
+                    className={`p-3 rounded-full transition-colors ${isDarkMode
+                      ? "text-gray-400 hover:bg-gray-800 hover:text-white"
+                      : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                      }`}
                   >
                     <social.icon size={20} />
                   </motion.a>
@@ -252,11 +256,10 @@ const HeroSection = () => {
             >
               <motion.div
                 variants={textVariants}
-                className={`text-sm uppercase tracking-widest ${
-                  isDarkMode ? "text-gray-500" : "text-gray-600"
-                } mb-6`}
+                className={`text-sm uppercase tracking-widest ${isDarkMode ? "text-gray-500" : "text-gray-600"
+                  } mb-6 h-6`}
               >
-                DevOps & Backend Engineer
+                {typedRole}<span className="animate-pulse">|</span>
               </motion.div>
               <motion.h1
                 variants={itemVariants}
@@ -279,9 +282,8 @@ const HeroSection = () => {
 
               <motion.p
                 variants={itemVariants}
-                className={`text-xl ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                } mb-12 font-light leading-relaxed max-w-lg`}
+                className={`text-xl ${isDarkMode ? "text-gray-400" : "text-gray-600"
+                  } mb-12 font-light leading-relaxed max-w-lg`}
               >
                 I build and automate secure cloud infrastructure, scalable
                 backends, and efficient developer pipelines using modern DevOps
@@ -302,11 +304,10 @@ const HeroSection = () => {
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => scrollToSection("contact")}
-                  className={`border ${
-                    isDarkMode
-                      ? "border-gray-700 hover:border-gray-600 text-gray-300"
-                      : "border-gray-300 hover:border-gray-400 text-gray-700"
-                  } px-8 py-4 rounded-full text-sm uppercase tracking-wider font-medium transition-all duration-300 flex items-center gap-2`}
+                  className={`border ${isDarkMode
+                    ? "border-gray-700 hover:border-gray-600 text-gray-300"
+                    : "border-gray-300 hover:border-gray-400 text-gray-700"
+                    } px-8 py-4 rounded-full text-sm uppercase tracking-wider font-medium transition-all duration-300 flex items-center gap-2`}
                 >
                   Get In Touch
                 </motion.button>
@@ -318,19 +319,23 @@ const HeroSection = () => {
                 className="flex space-x-6 mb-12"
               >
                 {[
-                  { icon: FiGithub, href: "https://github.com/Buff-alo" },
-                  { icon: FiLinkedin, href: "https://www.linkedin.com/in/kwadwo-boakye" },
-                  { icon: Mail, href: "mailto:contact@kwadwolabs.cloud?subject=Let's%20Talk&body=Hi%20Kwadwo,%20I%20checked%20your%20portfolio..." }
+                  { icon: FiGithub, href: "https://github.com/Buff-alo", label: "GitHub" },
+                  { icon: FiLinkedin, href: "https://www.linkedin.com/in/kwadwo-boakye", label: "LinkedIn" },
+                  { icon: Mail, href: "mailto:contact@kwadwolabs.cloud?subject=Let's%20Talk&body=Hi%20Kwadwo,%20I%20checked%20your%20portfolio...", label: "Email" },
+                  // { icon: Download, href: "/resume.pdf", label: "Resume", download: true }
                 ].map((social, index) => (
                   <motion.a
                     key={index}
                     whileHover={{ scale: 1.1, y: -3 }}
                     href={social.href}
-                    className={`p-3 rounded-full transition-colors ${
-                      isDarkMode
-                        ? "text-gray-400 hover:bg-gray-800 hover:text-white"
-                        : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
-                    }`}
+                    download={social.download || undefined}
+                    target={social.download ? undefined : "_blank"}
+                    rel={social.download ? undefined : "noopener noreferrer"}
+                    aria-label={social.label}
+                    className={`p-3 rounded-full transition-colors ${isDarkMode
+                      ? "text-gray-400 hover:bg-gray-800 hover:text-white"
+                      : "text-gray-600 hover:bg-gray-200 hover:text-gray-900"
+                      }`}
                   >
                     <social.icon size={20} />
                   </motion.a>
@@ -375,9 +380,8 @@ const HeroSection = () => {
 
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className={`w-80 h-96 rounded-3xl overflow-hidden border-4 ${
-                    isDarkMode ? "border-gray-800" : "border-gray-300"
-                  } shadow-2xl`}
+                  className={`w-80 h-96 rounded-3xl overflow-hidden border-4 ${isDarkMode ? "border-gray-800" : "border-gray-300"
+                    } shadow-2xl`}
                 >
                   <img
                     src={PROFILE_PIC}

@@ -6,6 +6,32 @@ import { motion, useTransform, useInView, useScroll } from "framer-motion";
 import { SKILLS_CAT, STATS, TECH_STACK } from "../../utils/data";
 import { containerVariants, itemVariants } from "../../utils/helper";
 import { Icon } from "@iconify/react";
+import useCountUp from "../../hooks/useCountUp";
+
+const StatItem = ({ stat, isDarkMode }) => {
+  const numericValue = parseInt(stat.value);
+  const suffix = stat.value.replace(numericValue, "");
+  const { count, ref } = useCountUp(numericValue, 2000);
+
+  return (
+    <motion.div
+      variants={itemVariants}
+      className="text-center"
+      ref={ref}
+    >
+      <div className="text-2xl md:text-3xl font-light text-blue-500 mb-2 font-mono">
+        <span>{count}</span>
+        <span>{suffix}</span>
+      </div>
+      <div
+        className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"
+          }`}
+      >
+        {stat.title}
+      </div>
+    </motion.div>
+  );
+};
 
 const SkillSection = () => {
   const { isDarkMode } = useTheme();
@@ -35,21 +61,18 @@ const SkillSection = () => {
     <section
       ref={sectionRef}
       id="skills"
-      className={`py-24 px-6 ${
-        isDarkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
-      } relative overflow-hidden`}
+      className={`py-24 px-6 ${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
+        } relative overflow-hidden`}
     >
-      {/* Backgroun Elements */}
+      {/* Background Elements */}
       <motion.div style={{ y }} className="absolute inset-0 overflow-hidden">
         <div
-          className={`absolute top-40 right-1/4 w-72 h-72 rounded-full blur-3xl opacity-5 ${
-            isDarkMode ? "bg-blue-500" : "bg-blue-400"
-          }`}
+          className={`absolute top-40 right-1/4 w-72 h-72 rounded-full blur-3xl opacity-5 ${isDarkMode ? "bg-blue-500" : "bg-blue-400"
+            }`}
         />
         <div
-          className={`absolute bottom-40 left-1/4 w-72 h-72 rounded-full blur-3xl opacity-5 ${
-            isDarkMode ? "bg-purple-500" : "bg-purple-400"
-          }`}
+          className={`absolute bottom-40 left-1/4 w-72 h-72 rounded-full blur-3xl opacity-5 ${isDarkMode ? "bg-purple-500" : "bg-purple-400"
+            }`}
         />
       </motion.div>
 
@@ -63,9 +86,8 @@ const SkillSection = () => {
         >
           <motion.div
             variants={itemVariants}
-            className={`text-sm uppercase tracking-widest ${
-              isDarkMode ? "text-gray-500" : "text-gray-600"
-            } mb-4`}
+            className={`text-sm uppercase tracking-widest ${isDarkMode ? "text-gray-500" : "text-gray-600"
+              } mb-4`}
           >
             Technical Expertise
           </motion.div>
@@ -79,9 +101,8 @@ const SkillSection = () => {
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className={`text-lg ${
-              isDarkMode ? "text-gray-400" : "text-gray-600"
-            } max-w-2xl mx-auto font-light`}
+            className={`text-lg ${isDarkMode ? "text-gray-400" : "text-gray-600"
+              } max-w-2xl mx-auto font-light`}
           >
             A comprehensive toolkit for building modern, scalable web
             applications from concept to deployment.
@@ -99,27 +120,24 @@ const SkillSection = () => {
             <motion.div
               key={category.title}
               variants={itemVariants}
-              className={`p-8 rounded-2xl border ${
-                isDarkMode
-                  ? "bg-gray-900/50 border-gray-800 backdrop-blur-sm"
-                  : "bg-white/50 border-gray-200 backdrop-blur-sm"
-              }`}
+              className={`p-8 rounded-2xl border ${isDarkMode
+                ? "bg-gray-900/50 border-gray-800 backdrop-blur-sm"
+                : "bg-white/50 border-gray-200 backdrop-blur-sm"
+                }`}
             >
               {/* Category Header */}
               <div className="flex items-center mb-6">
                 <div
-                  className={`p-3 rounded-xl ${
-                    isDarkMode ? "bg-gray-800" : "bg-gray-100"
-                  } mr-4`}
+                  className={`p-3 rounded-xl ${isDarkMode ? "bg-gray-800" : "bg-gray-100"
+                    } mr-4`}
                 >
                   <category.icon size={24} className="text-blue-500" />
                 </div>
                 <div>
                   <h3 className="text-xl font-medium mb-1">{category.title}</h3>
                   <p
-                    className={`text-sm ${
-                      isDarkMode ? "text-gray-400" : "text-gray-600"
-                    }`}
+                    className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"
+                      }`}
                   >
                     {category.description}
                   </p>
@@ -133,18 +151,16 @@ const SkillSection = () => {
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-sm font-medium">{skill.name}</span>
                       <span
-                        className={`text-xs ${
-                          isDarkMode ? "text-gray-500" : "text-gray-600"
-                        }`}
+                        className={`text-xs ${isDarkMode ? "text-gray-500" : "text-gray-600"
+                          }`}
                       >
                         {skill.level}%
                       </span>
                     </div>
 
                     <div
-                      className={`h-2 rounded-full overflow-hidden ${
-                        isDarkMode ? "text-gray-800" : "text-gray-200"
-                      }`}
+                      className={`h-2 rounded-full overflow-hidden ${isDarkMode ? "bg-gray-800" : "bg-gray-200"
+                        }`}
                     >
                       <motion.div
                         variants={skillBarVariants}
@@ -182,11 +198,10 @@ const SkillSection = () => {
               <motion.span
                 key={tech.name}
                 whileHover={{ y: -2, scale: 1.05 }}
-                className={`flex items-center gap-2 px-4 py-2 text-sm rounded-full border transition-all duration-300 ${
-                  isDarkMode
-                    ? "bg-gray-900 border-gray-700 text-gray-300 hover:border-gray-600"
-                    : "bg-white border-gray-300 text-gray-700 hover:border-gray-400"
-                }`}
+                className={`flex items-center gap-2 px-4 py-2 text-sm rounded-full border transition-all duration-300 ${isDarkMode
+                  ? "bg-gray-900 border-gray-700 text-gray-300 hover:border-gray-600"
+                  : "bg-white border-gray-300 text-gray-700 hover:border-gray-400"
+                  }`}
               >
                 {/* Render icon if available */}
                 {tech.icon && typeof tech.icon === "string" ? (
@@ -206,22 +221,7 @@ const SkillSection = () => {
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
         >
           {STATS.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              variants={itemVariants}
-              className="text-center"
-            >
-              <div className="text-2xl md:text-3xl font-light text-blue-500 mb-2">
-                <p>{stat.value}</p>
-              </div>
-              <div
-                className={`text-sm ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}
-              >
-                {stat.title}
-              </div>
-            </motion.div>
+            <StatItem key={stat.title} stat={stat} isDarkMode={isDarkMode} />
           ))}
         </motion.div>
       </div>

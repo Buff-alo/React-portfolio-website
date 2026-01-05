@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import { useTheme } from '.././context/ThemeContext';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
     motion,
     useScroll,
@@ -18,6 +18,7 @@ import {
 const Navbar = () => {
     const { isDarkMode, toggleDarkMode } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('home');
 
     const scrollToSection = (section) => {
         const element = document.getElementById(section);
@@ -25,6 +26,57 @@ const Navbar = () => {
             element.scrollIntoView({ behavior: 'smooth' });
         }
     };
+
+    // Close mobile menu on Escape key press
+    const handleKeyDown = useCallback((e) => {
+        if (e.key === 'Escape' && isOpen) {
+            setIsOpen(false);
+        }
+    }, [isOpen]);
+
+    // Close mobile menu when clicking outside
+    const handleClickOutside = useCallback((e) => {
+        if (isOpen && !e.target.closest('nav')) {
+            setIsOpen(false);
+        }
+    }, [isOpen]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', handleKeyDown);
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [handleKeyDown, handleClickOutside]);
+
+    // Track active section on scroll
+    useEffect(() => {
+        const sections = ['home', 'skills', 'work', 'about', 'contact'];
+        const observers = [];
+
+        sections.forEach((sectionId) => {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                const observer = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((entry) => {
+                            if (entry.isIntersecting) {
+                                setActiveSection(sectionId);
+                            }
+                        });
+                    },
+                    { threshold: 0.3, rootMargin: '-80px 0px 0px 0px' }
+                );
+                observer.observe(element);
+                observers.push(observer);
+            }
+        });
+
+        return () => {
+            observers.forEach((observer) => observer.disconnect());
+        };
+    }, []);
 
     return <motion.nav
         style={{ opacity: 1 }}
@@ -48,19 +100,28 @@ const Navbar = () => {
                         key={item}
                         whileHover={{ y: -2 }}
                         onClick={() => scrollToSection(item.toLowerCase())}
-                        className={`text-sm uppercase tracking-wider transition-colors ${isDarkMode
-                            ? 'text-gray-400 hover:text-white'
-                            : 'text-gray-600 hover:text-gray-900'
+                        className={`text-sm uppercase tracking-wider transition-colors relative ${activeSection === item.toLowerCase()
+                                ? 'text-blue-500'
+                                : isDarkMode
+                                    ? 'text-gray-400 hover:text-white'
+                                    : 'text-gray-600 hover:text-gray-900'
                             }`}
                     >
                         {item}
+                        {activeSection === item.toLowerCase() && (
+                            <motion.div
+                                layoutId="activeSection"
+                                className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-500 rounded-full"
+                                transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                            />
+                        )}
                     </motion.button>
                 ))}
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => toggleDarkMode(isDarkMode ? 'light' : 'dark')}
-                    aria-label="Toggle theme"
+                    aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
                     className={`p-2 rounded-full transition-colors ${isDarkMode
                         ? 'text-gray-400 hover:text-white hover:bg-gray-800 '
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -76,7 +137,7 @@ const Navbar = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => toggleDarkMode(isDarkMode ? 'light' : 'dark')}
-                    aria-label="Toggle theme"
+                    aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
                     className={`p-2 rounded-full transition-colors ${isDarkMode
                         ? 'text-gray-400 hover:text-white hover:bg-gray-800'
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -88,7 +149,9 @@ const Navbar = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setIsOpen(!isOpen)}
-                    aria-label="Toggle menu"
+                    aria-label={isOpen ? "Close menu" : "Open menu"}
+                    aria-expanded={isOpen}
+                    aria-controls="mobile-menu"
                     className={`p-2 rounded-full transition-colors ${isDarkMode
                         ? 'text-gray-400 hover:text-white hover:bg-gray-800'
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -103,6 +166,8 @@ const Navbar = () => {
         <AnimatePresence>
             {isOpen && (
                 <motion.div
+                    id="mobile-menu"
+                    role="menu"
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
@@ -114,6 +179,7 @@ const Navbar = () => {
                         {['Home', 'Skills', 'Work', 'About', 'Contact'].map((item) => (
                             <motion.button
                                 key={item}
+                                role="menuitem"
                                 whileHover={{ x: 5 }}
                                 onClick={() => {
                                     scrollToSection(item.toLowerCase());

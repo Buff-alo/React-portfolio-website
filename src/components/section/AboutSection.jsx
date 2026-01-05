@@ -50,21 +50,18 @@ const AboutSection = () => {
     <section
       ref={sectionRef}
       id="about"
-      className={`py-24 px-6 ${
-        isDarkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
-      } relative overflow-hidden`}
+      className={`py-24 px-6 ${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-50 text-gray-900"
+        } relative overflow-hidden`}
     >
       {/* Background Elements */}
       <motion.div style={{ y }} className="absolute inset-0 overflow-hidden">
         <div
-          className={`absolute top-40 right-1/3 w-80 h-80 rounded-full blur-3xl opacity-5 ${
-            isDarkMode ? "bg-blue-500" : "bg-blue-400"
-          }`}
+          className={`absolute top-40 right-1/3 w-80 h-80 rounded-full blur-3xl opacity-5 ${isDarkMode ? "bg-blue-500" : "bg-blue-400"
+            }`}
         />
         <div
-          className={`absolute bottom-20 left-1/3 w-96 h-96 rounded-full blur-3xl opacity-5 ${
-            isDarkMode ? "bg-purple-500" : "bg-purple-400"
-          }`}
+          className={`absolute bottom-20 left-1/3 w-96 h-96 rounded-full blur-3xl opacity-5 ${isDarkMode ? "bg-purple-500" : "bg-purple-400"
+            }`}
         />
       </motion.div>
 
@@ -78,9 +75,8 @@ const AboutSection = () => {
         >
           <motion.div
             variants={itemVariants}
-            className={`text-sm uppercase tracking-widest ${
-              isDarkMode ? "text-gray-500" : "text-gray-600"
-            } mb-4`}
+            className={`text-sm uppercase tracking-widest ${isDarkMode ? "text-gray-500" : "text-gray-600"
+              } mb-4`}
           >
             Get To Know
           </motion.div>
@@ -103,28 +99,25 @@ const AboutSection = () => {
           >
             <motion.div
               variants={itemVariants}
-              className={`p-8 rounded-2xl border ${
-                isDarkMode
+              className={`p-8 rounded-2xl border ${isDarkMode
                   ? "bg-gray-800/50 border-gray-700 backdrop-blur-sm"
                   : "bg-gray-50/80 border-gray-200 backdrop-blur-sm"
-              }`}
+                }`}
             >
               <h3 className="text-2xl font-medium ">My Mission</h3>
               <p
-                className={`text-lg leading-relaxed mb-6 ${
-                  isDarkMode ? "text-gray-300" : "text-gray-700"
-                }`}
+                className={`text-lg leading-relaxed mb-6 ${isDarkMode ? "text-gray-300" : "text-gray-700"
+                  }`}
               >
                 I believe technology should be a bridge that connects people and
                 solves real-world problems. As a DevOps engineer, I strive to
                 architect infrastructure and workflows that are scalable,
                 secure, and developer-friendly — using modern DevOps and
-                cloud-native tools. .
+                cloud-native tools.
               </p>
               <p
-                className={`text-base leading-relaxed ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}
+                className={`text-base leading-relaxed ${isDarkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
               >
                 When I'm not coding, you'll find me exploring new hobbies,
                 learning about different cultures, and enjoying the beauty of
@@ -135,19 +128,17 @@ const AboutSection = () => {
             {/* What I specialize in */}
             <motion.div
               variants={itemVariants}
-              className={`p-8 rounded-2xl border ${
-                isDarkMode
+              className={`p-8 rounded-2xl border ${isDarkMode
                   ? "bg-gray-800/50 border-gray-700 backdrop-blur-sm"
                   : "bg-gray-50/80 border-gray-200 backdrop-blur-sm"
-              }`}
+                }`}
             >
               <h3 className="text-2xl font-medium mb-4">
                 What I Specialize In
               </h3>
               <ul
-                className={`list-disc pl-6 space-y-2 text-base leading-relaxed ${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                }`}
+                className={`list-disc pl-6 space-y-2 text-base leading-relaxed ${isDarkMode ? "text-gray-400" : "text-gray-600"
+                  }`}
               >
                 <li>
                   🔧 <strong>DevOps & Infrastructure</strong>: I design scalable
@@ -177,25 +168,22 @@ const AboutSection = () => {
                     key={passion.title}
                     variants={itemVariants}
                     whileHover={{ x: 4 }}
-                    className={`flex items-center mb-4 space-x-4 p-4 rounded-xl ${
-                      isDarkMode
+                    className={`flex items-center mb-4 space-x-4 p-4 rounded-xl ${isDarkMode
                         ? "bg-gray-800/30 hover:bg-gray-800/50"
                         : "bg-gray-50/50 hover:bg-gray-100/50"
-                    } transition-all duration-300`}
+                      } transition-all duration-300`}
                   >
                     <div
-                      className={`p-3 rounded-lg ${
-                        isDarkMode ? "bg-gray-700" : "bg-white"
-                      }`}
+                      className={`p-3 rounded-lg ${isDarkMode ? "bg-gray-700" : "bg-white"
+                        }`}
                     >
                       <passion.icon size={20} className="text-blue-500" />
                     </div>
                     <div>
                       <h4 className="font-medium mb-1">{passion.title}</h4>
                       <p
-                        className={`text-sm ${
-                          isDarkMode ? "text-gray-400" : "text-gray-600"
-                        }`}
+                        className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"
+                          }`}
                       >
                         {passion.description}
                       </p>
@@ -208,9 +196,8 @@ const AboutSection = () => {
             {/*  Digital Signature */}
             <motion.div variants={itemVariants} className="text-center py-8">
               <div
-                className={`text-sm ${
-                  isDarkMode ? "text-gray-500" : "text-gray-600"
-                } mb-4`}
+                className={`text-sm ${isDarkMode ? "text-gray-500" : "text-gray-600"
+                  } mb-4`}
               >
                 Crafted with passion by
               </div>
@@ -238,9 +225,8 @@ const AboutSection = () => {
 
             {/* Timeline Line */}
             <div
-              className={`absolute left-8 top-16 bottom-0 w-px ${
-                isDarkMode ? "bg-gray-700" : "bg-gray-300"
-              }`}
+              className={`absolute left-8 top-16 bottom-0 w-px ${isDarkMode ? "bg-gray-700" : "bg-gray-300"
+                }`}
             />
 
             <div className="space-y-8">
@@ -260,35 +246,31 @@ const AboutSection = () => {
 
                   {/* Content */}
                   <div
-                    className={`flex-grow p-6 rounded-xl border transition-all duration-300 ${
-                      isDarkMode
+                    className={`flex-grow p-6 rounded-xl border transition-all duration-300 ${isDarkMode
                         ? "bg-gray-800/50 border-gray-700 group-hover:border-gray-600 group-hover:bg-gray-800/70 "
                         : "bg-white/80 border-gray-200 group-hover:border-gray-300 group-hover:bg-white/70"
-                    } backdrop-blur-sm`}
+                      } backdrop-blur-sm`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="text-xl font-medium">{step.title}</h4>
                       <span
-                        className={`text-sm px-3 py-1 rounded-full ${
-                          isDarkMode
+                        className={`text-sm px-3 py-1 rounded-full ${isDarkMode
                             ? "bg-gray-700 text-gray-300"
                             : "bg-gray-100 text-gray-700"
-                        }`}
+                          }`}
                       >
                         {step.year}
                       </span>
                     </div>
                     <div
-                      className={`text-sm font-medium ${
-                        isDarkMode ? "text-blue-400" : "text-blue-600"
-                      }`}
+                      className={`text-sm font-medium ${isDarkMode ? "text-blue-400" : "text-blue-600"
+                        }`}
                     >
                       {step.company}
                     </div>
                     <p
-                      className={`text-sm leading-relaxed ${
-                        isDarkMode ? "text-gray-400" : "text-gray-600"
-                      }`}
+                      className={`text-sm leading-relaxed ${isDarkMode ? "text-gray-400" : "text-gray-600"
+                        }`}
                     >
                       {step.description}
                     </p>
@@ -310,9 +292,8 @@ const AboutSection = () => {
             className="flex flex-col items-center space-y-6"
           >
             <p
-              className={`text-lg ${
-                isDarkMode ? "text-gray-400" : "text-gray-600"
-              }`}
+              className={`text-lg ${isDarkMode ? "text-gray-400" : "text-gray-600"
+                }`}
             >
               Ready to bring your ideas to life ?
             </p>
@@ -320,6 +301,10 @@ const AboutSection = () => {
             <motion.button
               whileHover={{ y: -2, scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
+              onClick={() => {
+                const element = document.getElementById('contact');
+                if (element) element.scrollIntoView({ behavior: 'smooth' });
+              }}
               className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-full text-sm uppercase tracking-wider font-medium transition-all duration-300"
             >
               Let's work together
