@@ -22,6 +22,12 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+        env:
+        - name: VITE_WEB3FORMS_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: web3forms-secret
+              key: access-key
       tolerations:
           - key: "resource"
             operator: "Equal"
