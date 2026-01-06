@@ -101,10 +101,10 @@ const Navbar = () => {
                         whileHover={{ y: -2 }}
                         onClick={() => scrollToSection(item.toLowerCase())}
                         className={`text-sm uppercase tracking-wider transition-colors relative ${activeSection === item.toLowerCase()
-                                ? 'text-blue-500'
-                                : isDarkMode
-                                    ? 'text-gray-400 hover:text-white'
-                                    : 'text-gray-600 hover:text-gray-900'
+                            ? 'text-blue-500'
+                            : isDarkMode
+                                ? 'text-gray-400 hover:text-white'
+                                : 'text-gray-600 hover:text-gray-900'
                             }`}
                     >
                         {item}
@@ -171,8 +171,7 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    className={`md:hidden ml-4 p-4 rounded-lg ${isDarkMode ? 'bg-gray-900' : 'bg-white'
-                        } border ${isDarkMode ? 'border-gray-800' : 'border-gray-200'
+                    className={`absolute top-full left-0 w-full p-4 border-b shadow-lg md:hidden ${isDarkMode ? 'bg-gray-950 border-gray-800' : 'bg-white border-gray-200'
                         }`}
                 >
                     <div className="flex flex-col space-y-2">
