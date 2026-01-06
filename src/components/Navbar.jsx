@@ -148,7 +148,10 @@ const Navbar = () => {
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => setIsOpen(!isOpen)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setIsOpen(!isOpen);
+                    }}
                     aria-label={isOpen ? "Close menu" : "Open menu"}
                     aria-expanded={isOpen}
                     aria-controls="mobile-menu"
@@ -171,7 +174,7 @@ const Navbar = () => {
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
-                    className={`absolute top-full left-0 w-full p-4 border-b shadow-lg md:hidden ${isDarkMode ? 'bg-gray-950 border-gray-800' : 'bg-white border-gray-200'
+                    className={`absolute top-full left-0 w-full z-50 p-4 border-b shadow-lg md:hidden ${isDarkMode ? 'bg-gray-950 border-gray-800' : 'bg-white border-gray-200'
                         }`}
                 >
                     <div className="flex flex-col space-y-2">
