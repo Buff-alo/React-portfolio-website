@@ -100,8 +100,8 @@ const AboutSection = () => {
             <motion.div
               variants={itemVariants}
               className={`p-8 rounded-2xl border ${isDarkMode
-                  ? "bg-gray-800/50 border-gray-700 backdrop-blur-sm"
-                  : "bg-gray-50/80 border-gray-200 backdrop-blur-sm"
+                ? "bg-gray-800/50 border-gray-700 backdrop-blur-sm"
+                : "bg-gray-50/80 border-gray-200 backdrop-blur-sm"
                 }`}
             >
               <h3 className="text-2xl font-medium ">My Mission</h3>
@@ -129,8 +129,8 @@ const AboutSection = () => {
             <motion.div
               variants={itemVariants}
               className={`p-8 rounded-2xl border ${isDarkMode
-                  ? "bg-gray-800/50 border-gray-700 backdrop-blur-sm"
-                  : "bg-gray-50/80 border-gray-200 backdrop-blur-sm"
+                ? "bg-gray-800/50 border-gray-700 backdrop-blur-sm"
+                : "bg-gray-50/80 border-gray-200 backdrop-blur-sm"
                 }`}
             >
               <h3 className="text-2xl font-medium mb-4">
@@ -169,8 +169,8 @@ const AboutSection = () => {
                     variants={itemVariants}
                     whileHover={{ x: 4 }}
                     className={`flex items-center mb-4 space-x-4 p-4 rounded-xl ${isDarkMode
-                        ? "bg-gray-800/30 hover:bg-gray-800/50"
-                        : "bg-gray-50/50 hover:bg-gray-100/50"
+                      ? "bg-gray-800/30 hover:bg-gray-800/50"
+                      : "bg-gray-50/50 hover:bg-gray-100/50"
                       } transition-all duration-300`}
                   >
                     <div
@@ -232,7 +232,7 @@ const AboutSection = () => {
             <div className="space-y-8">
               {JOURNEY_STEPS.map((step, index) => (
                 <motion.div
-                  key={step.year}
+                  key={index}
                   variants={stepVariants}
                   whileHover={{ x: 4 }}
                   className="relative flex items-start space-x-6 group"
@@ -247,16 +247,16 @@ const AboutSection = () => {
                   {/* Content */}
                   <div
                     className={`flex-grow p-6 rounded-xl border transition-all duration-300 ${isDarkMode
-                        ? "bg-gray-800/50 border-gray-700 group-hover:border-gray-600 group-hover:bg-gray-800/70 "
-                        : "bg-white/80 border-gray-200 group-hover:border-gray-300 group-hover:bg-white/70"
+                      ? "bg-gray-800/50 border-gray-700 group-hover:border-gray-600 group-hover:bg-gray-800/70 "
+                      : "bg-white/80 border-gray-200 group-hover:border-gray-300 group-hover:bg-white/70"
                       } backdrop-blur-sm`}
                   >
                     <div className="flex items-center justify-between mb-2">
                       <h4 className="text-xl font-medium">{step.title}</h4>
                       <span
                         className={`text-sm px-3 py-1 rounded-full ${isDarkMode
-                            ? "bg-gray-700 text-gray-300"
-                            : "bg-gray-100 text-gray-700"
+                          ? "bg-gray-700 text-gray-300"
+                          : "bg-gray-100 text-gray-700"
                           }`}
                       >
                         {step.year}
