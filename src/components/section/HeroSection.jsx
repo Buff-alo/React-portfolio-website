@@ -139,7 +139,12 @@ const HeroSection = () => {
                 className={`text-sm uppercase tracking-widest ${isDarkMode ? "text-gray-500" : "text-gray-600"
                   } mb-4 h-6`}
               >
-                {typedRole}<span className="animate-pulse">|</span>
+                {typedRole}
+                <motion.span
+                  animate={{ opacity: [0, 1, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                  className="inline-block w-[2px] h-4 ml-1 bg-current align-middle"
+                />
               </motion.div>
 
               <motion.h1
@@ -262,7 +267,12 @@ const HeroSection = () => {
                 className={`text-sm uppercase tracking-widest ${isDarkMode ? "text-gray-500" : "text-gray-600"
                   } mb-6 h-6`}
               >
-                {typedRole}<span className="animate-pulse">|</span>
+                {typedRole}
+                <motion.span
+                  animate={{ opacity: [0, 1, 0] }}
+                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                  className="inline-block w-[2px] h-4 ml-1 bg-current align-middle"
+                />
               </motion.div>
               <motion.h1
                 variants={itemVariants}
