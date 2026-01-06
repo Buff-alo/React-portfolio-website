@@ -140,11 +140,6 @@ const HeroSection = () => {
                   } mb-4 h-6`}
               >
                 {typedRole}
-                <motion.span
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                  className="inline-block w-[2px] h-4 ml-1 bg-current align-middle"
-                />
               </motion.div>
 
               <motion.h1
@@ -268,11 +263,6 @@ const HeroSection = () => {
                   } mb-6 h-6`}
               >
                 {typedRole}
-                <motion.span
-                  animate={{ opacity: [0, 1, 0] }}
-                  transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
-                  className="inline-block w-[2px] h-4 ml-1 bg-current align-middle"
-                />
               </motion.div>
               <motion.h1
                 variants={itemVariants}
