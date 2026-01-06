@@ -10,10 +10,13 @@ import { HERO_TAGS } from "../../utils/data";
 import useTypewriter from "../../hooks/useTypewriter";
 
 import PROFILE_PIC from "../../assets/images/profile1.jpg";
+
+const ROLES = ["DevOps Engineer", "Backend Developer", "Cloud Architect"];
+
 const HeroSection = () => {
   const { isDarkMode } = useTheme();
   const typedRole = useTypewriter(
-    ["DevOps Engineer", "Backend Developer", "Cloud Architect"],
+    ROLES,
     80,
     40,
     2500
