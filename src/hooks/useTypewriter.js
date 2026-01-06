@@ -16,9 +16,18 @@ const useTypewriter = (
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const [currentText, setCurrentText] = useState('');
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isPausing, setIsPausing] = useState(false);
 
     useEffect(() => {
         const currentWord = words[currentWordIndex];
+
+        if (isPausing) {
+            const timeout = setTimeout(() => {
+                setIsPausing(false);
+                setIsDeleting(true);
+            }, pauseDuration);
+            return () => clearTimeout(timeout);
+        }
 
         const timeout = setTimeout(() => {
             if (!isDeleting) {
@@ -26,8 +35,8 @@ const useTypewriter = (
                 if (currentText.length < currentWord.length) {
                     setCurrentText(currentWord.slice(0, currentText.length + 1));
                 } else {
-                    // Word complete, pause then start deleting
-                    setTimeout(() => setIsDeleting(true), pauseDuration);
+                    // Word complete, start pause
+                    setIsPausing(true);
                 }
             } else {
                 // Deleting
@@ -42,7 +51,7 @@ const useTypewriter = (
         }, isDeleting ? deletingSpeed : typingSpeed);
 
         return () => clearTimeout(timeout);
-    }, [currentText, isDeleting, currentWordIndex, words, typingSpeed, deletingSpeed, pauseDuration]);
+    }, [currentText, isDeleting, isPausing, currentWordIndex, words, typingSpeed, deletingSpeed, pauseDuration]);
 
     return currentText;
 };
