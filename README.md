@@ -72,6 +72,15 @@ Preview the production build:
 npm run preview
 ```
 
+### Deploy on Vercel
+
+1. Push this repository to GitHub or GitLab.
+2. Import the project into your [Vercel Dashboard](https://vercel.com/new).
+3. Vercel will automatically detect the **Vite** preset (or use the included [vercel.json](file:///Users/buffalo/Documents/Workspace/react-dev-portfolio/vercel.json)).
+4. Add the environment variable in the Vercel project settings:
+   - `VITE_WEB3FORMS_ACCESS_KEY`: your Web3Forms access key
+5. Click **Deploy**.
+
 ## 📧 Contact Form Setup
 
 The contact form uses [Web3Forms](https://web3forms.com/) for email delivery. To set it up:
