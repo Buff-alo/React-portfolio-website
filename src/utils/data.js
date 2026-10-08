@@ -39,6 +39,7 @@ export const SKILLS_CAT = [
       { name: "Kubernetes", level: 85, color: "bg-blue-600" },
       { name: "Docker", level: 90, color: "bg-blue-500" },
       { name: "GitLab CI/CD", level: 85, color: "bg-orange-500" },
+      { name: "Github actions", level: 60, color: "bg-gray-400"}
     ],
   },
   {
@@ -62,6 +63,7 @@ export const SKILLS_CAT = [
       { name: "TypeScript", level: 70, color: "bg-indigo-600" },
       { name: "Bash", level: 75, color: "bg-gray-600" },
       { name: "PHP", level: 40, color: "bg-purple-600" },
+      { name: "Rust", level: 30, color: "bg-orange-600"}
     ],
   },
   {
@@ -71,6 +73,7 @@ export const SKILLS_CAT = [
     skills: [
       { name: "MySql", level: 70, color: "bg-blue-500" },
       { name: "PostgreSQL", level: 65, color: "bg-indigo-500" },
+      { name: "MariaDB", level: 50, color: "bg-blue-500"},
       { name: "SQLite", level: 80, color: "bg-gray-500" },
       // { name: "MongoDB", level: 75, color: "bg-green-500" },
     ],
@@ -168,10 +171,10 @@ export const JOURNEY_STEPS = [
     color: "bg-red-500",
   },
   {
-    year: "2025",
-    title: "Automated Trading Bot (Ongoing)",
+    year: "2026",
+    title: "Ai Powered Bible Presentation App",
     description:
-      "Working on a trade bot using Telethon, Selenium, and multi-threading, combining Python, bots, and automation.",
+      "An Ai powered bible presentation app in Rust using AI models to transcribe audio and generate presentations of spoken verses with their references.",
     icon: Zap,
     color: "bg-yellow-500",
   },
